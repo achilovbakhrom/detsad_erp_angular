@@ -1,0 +1,27 @@
+.app-dashboard-wrapper {
+    height: 100vh;
+}
+
+.app-header {
+    background-color: #eee;
+    padding: 8px 20px;
+}
+
+.app-content {
+    overflow: hidden;
+    height: calc(100% - 56px);
+    position: relative;
+}
+
+.app-side-bar {
+    height: 100%;
+    width: 240px;
+}
+
+.app-content__inner {
+    height: 100%;
+    overflow: hidden;
+    padding: 8px 12px;
+}
+
+

@@ -1,0 +1,29 @@
+<div class="app-dashboard-wrapper">
+    <nz-page-header nzBackIcon nzTitle="Dashboard" class="app-header" />
+    <nz-flex nzGap="0" class="app-content">
+      <ul nz-menu nzMode="inline" class="app-side-bar">
+        <li
+          nz-submenu
+          nzTitle="Справочники"
+          nzIcon="mail"
+        >
+          <ul>
+            <li nz-menu-item>
+              <a routerLink="/app/company">
+                Компании
+              </a>
+            </li>
+            <li nz-menu-item>Филиалы</li>
+            
+          </ul>
+        </li>
+        <li nz-menu-item>Клиенты</li>
+        <li nz-menu-item>Контракты</li>    
+        <li nz-menu-item>Сотрудники</li>    
+      </ul>
+      <nz-flex nzFlex="1 1 0" nzVertical class="app-content__inner">
+          <router-outlet></router-outlet>
+      </nz-flex>
+    </nz-flex>
+</div>
+

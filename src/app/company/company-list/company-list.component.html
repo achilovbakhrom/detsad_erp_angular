@@ -1,0 +1,49 @@
+<div #containerEl class="content">
+    <div nz-flex class="header" nzJustify="flex-end" nzAlign="center">
+        <button nz-button nzType="primary" [routerLink]="'/app/company/create'">Добавить</button>
+    </div>
+    <nz-table
+        #table
+        *ngIf="(data$ | async) as data"
+        [nzData]="data || []"
+        [nzPageIndex]="(size$ | async) ?? 1"
+        (nzPageIndexChange)="setPage($event)"
+        [nzPageSize]="(size$ | async) ?? 20"
+        (nzPageSizeChange)="setSize($event)"
+        
+        [nzScroll]="{ y: tableHeight }"
+    >
+        <thead>
+          <tr>
+            <th>Название</th>
+            <th>Основной</th>
+            <th>ИНН</th>
+            <th>МФО</th>
+            <th>Юридический адрес</th>
+            <th>Описание</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of table.data">
+            <td>{{ row.name }}</td>
+            <td>{{ row.is_default ? 'Да' : 'Нет' }}</td>
+            <td>{{ row.inn }}</td>
+            <td>{{ row.mfo }}</td>
+            <td>{{ row.jurisdical_address }}</td>
+            <td>{{ row.description }}</td>
+            <td>
+              <button
+                nz-button
+                nzType="text"
+                nz-popconfirm
+                nzPopconfirmTitle="Вы действительно хотите удалить компанию?"
+                (nzOnConfirm)="onDelete(row)"
+                [nzOkText]="'Да'"
+                [nzCancelText]="'Нет'"
+              >Delete</button>
+            </td>
+          </tr>
+        </tbody>
+    </nz-table>
+</div>

@@ -1,0 +1,49 @@
+<form nz-form [formGroup]="loginForm" (submit)="onSubmit($event)">
+    <nz-card class="form__wrapper">
+        <div class="form__content">
+            <h4 nz-typography [align]="'center'">Войти</h4>
+            <div *ngIf="(error$ | async) as errorText" nz-typography nzType="danger">{{ errorText }}</div>
+            <div>
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Please input your username!">
+                    <nz-input-group nzPrefixIcon="user">
+                        <input
+                            formControlName="username"
+                            placeholder="username"
+                            nz-input
+                            required
+                        />
+                    </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Please input your Password!">
+                    <nz-input-group nzPrefixIcon="lock">
+                        <input
+                            formControlName="password"
+                            type="password"
+                            placeholder="Password"
+                            nz-input
+                            required
+                        />
+                    </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            
+            <nz-form-item>
+                <nz-form-control class="centered">
+                <button
+                    nz-button
+                    nzType="primary"
+                    [disabled]="loginForm.invalid"
+                    [nzLoading]="isLoading$ | async"
+                >
+                    Log in
+                </button>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        
+    </nz-card>
+</form>

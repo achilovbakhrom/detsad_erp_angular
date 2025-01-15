@@ -1,0 +1,66 @@
+<form [formGroup]="companyForm" (ngSubmit)="onSubmit()" nz-form [nzLayout]="'vertical'">
+    <!-- Name -->
+    <nz-form-item>
+      <nz-form-label [nzFor]="'name'" nzRequired>Name</nz-form-label>
+      <nz-form-control [nzErrorTip]="'Максимально 100 символов'">
+        <input nz-input id="name" formControlName="name" placeholder="Введите название компании" />
+      </nz-form-control>
+    </nz-form-item>
+  
+    <!-- Is Default -->
+    <nz-form-item>
+      <nz-form-control>
+        <label nz-checkbox formControlName="is_default">Сделать основной</label>
+      </nz-form-control>
+    </nz-form-item>
+  
+    <!-- INN -->
+    <nz-form-item>
+      <nz-form-label [nzFor]="'inn'" nzRequired>ИНН</nz-form-label>
+      <nz-form-control [nzErrorTip]="'ИНН объязательное поле и должен состоять из 9 цифр.'">
+        <input nz-input id="inn" formControlName="inn" placeholder="Введите ИНН" />
+      </nz-form-control>
+    </nz-form-item>
+  
+    <!-- MFO -->
+    <nz-form-item>
+      <nz-form-label [nzFor]="'mfo'">МФО</nz-form-label>
+      <nz-form-control [nzErrorTip]="'МФО должен состоять из 5 символо. (Необязательно)'">
+        <input nz-input id="mfo" formControlName="mfo" placeholder="Введите МФО" />
+      </nz-form-control>
+    </nz-form-item>
+  
+    <!-- Jurisdical Address -->
+    <nz-form-item>
+      <nz-form-label [nzFor]="'jurisdical_address'">Юридический адрес</nz-form-label>
+      <nz-form-control [nzErrorTip]="'Адрес должен быть максимум 255 символов. (Необязательно)'">
+        <input
+          nz-input
+          id="jurisdical_address"
+          formControlName="jurisdical_address"
+          placeholder="Введите юридический адрес"
+        />
+      </nz-form-control>
+    </nz-form-item>
+  
+    <!-- Description -->
+    <nz-form-item>
+      <nz-form-label [nzFor]="'description'">Описание (Необязательно)</nz-form-label>
+      <nz-form-control [nzErrorTip]="'Description must be less than 500 characters.'">
+        <textarea
+          nz-input
+          id="description"
+          formControlName="description"
+          placeholder="Введите описание"
+          rows="4"
+        ></textarea>
+      </nz-form-control>
+    </nz-form-item>
+  
+    <!-- Submit Button -->
+    <nz-form-item>
+      <nz-form-control>
+        <button nz-button nzType="primary" [disabled]="!companyForm.valid">Сохранить</button>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
