@@ -1,5 +1,12 @@
 <div class="app-dashboard-wrapper">
-    <nz-page-header nzBackIcon nzTitle="Dashboard" class="app-header" />
+    <nz-page-header nzBackIcon nzTitle="Dashboard" class="app-header">
+      <nz-page-header-extra>
+        <nz-space>
+          <app-company-picker [(selectedCompany)]="selectedCompany" />
+        </nz-space>
+      </nz-page-header-extra>
+
+    </nz-page-header>
     <nz-flex nzGap="0" class="app-content">
       <ul nz-menu nzMode="inline" class="app-side-bar">
         <li

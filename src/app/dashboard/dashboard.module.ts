@@ -8,6 +8,8 @@ import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 import { NzFlexModule } from 'ng-zorro-antd/flex';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { NzSpaceModule } from 'ng-zorro-antd/space';
+import { SharedModule } from "../shared/shared.module";
 
 @NgModule({
   declarations: [DashboardComponent],
@@ -20,7 +22,9 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
     NzBreadCrumbModule,
     NzFlexModule,
     NzMenuModule,
-  ],
+    NzSpaceModule,
+    SharedModule
+],
   bootstrap: [DashboardComponent],
 })
 export class DashboardModule {}
