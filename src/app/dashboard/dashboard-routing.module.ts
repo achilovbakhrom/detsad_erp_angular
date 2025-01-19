@@ -29,6 +29,40 @@ const routes: Routes = [
         loadChildren: () =>
           import('../branch/branch.module').then((m) => m.BranchModule),
       },
+      {
+        path: 'group',
+        loadChildren: () =>
+          import('../group/group.module').then((m) => m.GroupModule),
+      },
+      {
+        path: 'child',
+        loadChildren: () =>
+          import('../child/child.module').then((m) => m.ChildModule),
+      },
+      {
+        path: 'position',
+        loadChildren: () =>
+          import('../position/position.module').then((m) => m.PositionModule),
+      },
+      {
+        path: 'reason',
+        loadChildren: () =>
+          import('../reason/reason.module').then((m) => m.ReasonModule),
+      },
+      {
+        path: 'department',
+        loadChildren: () =>
+          import('../department/department.module').then(
+            (m) => m.DepartmentModule
+          ),
+      },
+      {
+        path: 'payment-type',
+        loadChildren: () =>
+          import('../payment-type/payment-type.module').then(
+            (m) => m.PaymentTypeModule
+          ),
+      },
     ],
   },
 ];

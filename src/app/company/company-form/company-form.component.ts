@@ -33,11 +33,6 @@ export class CompanyFormComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(
-      'this.companyForm.valid',
-      this.companyForm,
-      this.companyForm.valid
-    );
     if (this.companyForm.valid) {
       const companyData = this.companyForm.value;
       this.store.dispatch(saveCompany({ company: companyData }));

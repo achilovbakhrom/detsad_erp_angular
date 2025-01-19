@@ -23,6 +23,30 @@ import { getInitialAuthState } from './core/stores/auth/auth.state';
 import { getInitialCompanyState } from './core/stores/company/company.state';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { CompanyEffects } from './core/stores/company/company.effects';
+import { BranchEffects } from './core/stores/branch/branch.effects';
+import { branchReducer } from './core/stores/branch/branch.reducer';
+import { getInitialBranchState } from './core/stores/branch/branch.state';
+import { commonReducer } from './core/stores/common/common.reducer';
+import { getInitialCommonState } from './core/stores/common/common.state';
+import { groupReducer } from './core/stores/group/group.reducer';
+import { getInitialGroupState } from './core/stores/group/group.state';
+import { ChildComponent } from './child/child.component';
+import { GroupEffects } from './core/stores/group/group.effects';
+import { ChildEffects } from './core/stores/child/child.effects';
+import { childReducer } from './core/stores/child/child.reducer';
+import { getInitialChildState } from './core/stores/child/child.state';
+import { positionReducer } from './core/stores/position/position.reducer';
+import { reasonReducer } from './core/stores/reason/reason.reducer';
+import { getInitialPositionState } from './core/stores/position/position.state';
+import { getInitialReasonState } from './core/stores/reason/reason.state';
+import { PositionEffects } from './core/stores/position/position.effects';
+import { ReasonEffects } from './core/stores/reason/reason.effects';
+import { DepartmentEffects } from './core/stores/department/department.effects';
+import { departmentReducer } from './core/stores/department/department.reducer';
+import { getInitialDepartmentState } from './core/stores/department/department.state';
+import { paymentTypeReducer } from './core/stores/payment-type/payment-type.reducer';
+import { getInitialPaymentTypeState } from './core/stores/payment-type/payment-type.state';
+import { PaymentTypeEffects } from './core/stores/payment-type/payment-type.effects';
 
 registerLocaleData(en);
 
@@ -33,16 +57,45 @@ registerLocaleData(en);
     AppRoutingModule,
     CoreModule,
     StoreModule.forRoot(
-      { auth: authReducer, company: companyReducer },
+      {
+        common: commonReducer,
+        auth: authReducer,
+        company: companyReducer,
+        branch: branchReducer,
+        group: groupReducer,
+        child: childReducer,
+        position: positionReducer,
+        reason: reasonReducer,
+        department: departmentReducer,
+        paymentType: paymentTypeReducer,
+      },
       {
         metaReducers: [localStorageSyncReducer],
         initialState: {
+          common: getInitialCommonState(),
           auth: getInitialAuthState(),
           company: getInitialCompanyState(),
+          branch: getInitialBranchState(),
+          group: getInitialGroupState(),
+          child: getInitialChildState(),
+          position: getInitialPositionState(),
+          reason: getInitialReasonState(),
+          department: getInitialDepartmentState(),
+          paymentType: getInitialPaymentTypeState(),
         },
       }
     ),
-    EffectsModule.forRoot([AuthEffects, CompanyEffects]),
+    EffectsModule.forRoot([
+      AuthEffects,
+      CompanyEffects,
+      BranchEffects,
+      GroupEffects,
+      ChildEffects,
+      PositionEffects,
+      ReasonEffects,
+      DepartmentEffects,
+      PaymentTypeEffects,
+    ]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
   ],
   providers: [

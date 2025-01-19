@@ -1,0 +1,23 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { PaymentTypeListComponent } from './payment-type-list.component';
+
+describe('PaymentTypeListComponent', () => {
+  let component: PaymentTypeListComponent;
+  let fixture: ComponentFixture<PaymentTypeListComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [PaymentTypeListComponent]
+    })
+    .compileComponents();
+
+    fixture = TestBed.createComponent(PaymentTypeListComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

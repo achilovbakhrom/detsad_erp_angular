@@ -44,7 +44,7 @@ export class CompanyEffects {
         this.companyService.createCompany(action.company).pipe(
           map((company) => {
             this.showSuccessMessage();
-            this.goToCompanyList();
+            this.goToCompanyListPage();
             return saveCompanySuccess({ company });
           }),
 
@@ -108,7 +108,7 @@ export class CompanyEffects {
     this.notificationService.success('Успешно', 'Компания создана успешно');
   }
 
-  goToCompanyList() {
+  goToCompanyListPage() {
     this.router.navigate(['/app/company']);
   }
 }

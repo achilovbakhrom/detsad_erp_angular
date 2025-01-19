@@ -1,0 +1,19 @@
+<form [formGroup]="paymentTypeForm" (ngSubmit)="onSubmit()" nz-form nzLayout="vertical">
+    
+    <!-- Name -->
+    <nz-form-item>
+        <nz-form-label nzFor="tname" nzRequired>Название</nz-form-label>
+        <nz-form-control nzErrorTip="Максимально 100 символов">
+            <input nz-input id="name" formControlName="name" placeholder="Введите название" />
+        </nz-form-control>
+    </nz-form-item>
+
+
+    <!-- Submit Button -->
+     <nz-form-item>
+        <nz-form-control>
+            <button nz-button nzType="primary" [disabled]="!paymentTypeForm.valid">Сохранить</button>
+        </nz-form-control>
+     </nz-form-item>
+
+</form>

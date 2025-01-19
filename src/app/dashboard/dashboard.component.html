@@ -2,7 +2,10 @@
     <nz-page-header nzBackIcon nzTitle="Dashboard" class="app-header">
       <nz-page-header-extra>
         <nz-space>
-          <app-company-picker [(selectedCompany)]="selectedCompany" />
+          <app-company-picker [selectedCompany]="company | async" (selectedCompanyChange)="setCompany($event)" />
+        </nz-space>
+        <nz-space>
+          <div>{{ (company | async)?.name }}</div>
         </nz-space>
       </nz-page-header-extra>
 
@@ -20,7 +23,41 @@
                 Компании
               </a>
             </li>
-            <li nz-menu-item>Филиалы</li>
+            <li nz-menu-item>
+              <a routerLink="/app/branch">
+                Филиалы
+              </a>
+            </li>
+            <li nz-menu-item>
+              <a routerLink="/app/group">
+                Группы
+              </a>
+            </li>
+            <li nz-menu-item>
+              <a routerLink="/app/child">
+                Дети
+              </a>
+            </li>
+            <li nz-menu-item>
+              <a routerLink="/app/position">
+                Позиции
+              </a>
+            </li>
+            <li nz-menu-item>
+              <a routerLink="/app/reason">
+                Причины
+              </a>
+            </li>
+            <li nz-menu-item>
+              <a routerLink="/app/department">
+                Разделы
+              </a>
+            </li>
+            <li nz-menu-item>
+              <a routerLink="/app/payment-type">
+                Способ оплаты
+              </a>
+            </li>
             
           </ul>
         </li>

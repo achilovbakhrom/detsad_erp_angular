@@ -6,6 +6,8 @@ import {
   Output,
   Optional,
   Self,
+  OnChanges,
+  SimpleChanges,
 } from '@angular/core';
 import { Company } from '../../../model/company';
 import {
@@ -21,6 +23,7 @@ import {
   ControlValueAccessor,
   NG_VALUE_ACCESSOR,
 } from '@angular/forms';
+import { Nillable } from '../../../model/nullable';
 
 @Component({
   selector: 'app-company-picker',
@@ -35,8 +38,10 @@ import {
     },
   ],
 })
-export class CompanyPickerComponent implements OnInit, ControlValueAccessor {
-  @Input() selectedCompany: Company | undefined;
+export class CompanyPickerComponent
+  implements OnInit, OnChanges, ControlValueAccessor
+{
+  @Input() selectedCompany: Nillable<Company>;
 
   @Output() selectedCompanyChange = new EventEmitter<Company | undefined>();
 
@@ -52,6 +57,13 @@ export class CompanyPickerComponent implements OnInit, ControlValueAccessor {
     private companyService: CompanyService,
     @Optional() @Self() public ngModel: NgModel
   ) {}
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['selectedCompany'] && changes['selectedCompany'].currentValue) {
+      const company = changes['selectedCompany'].currentValue;
+      this.inputValue = company.name || '';
+    }
+  }
 
   ngOnInit(): void {
     this.searchSubject
@@ -99,6 +111,7 @@ export class CompanyPickerComponent implements OnInit, ControlValueAccessor {
     this.inputValue = '';
     this.selectedCompanyChange.emit(undefined);
     this._onChange(undefined);
+    this.searchSubject.next('');
   }
 
   // ControlValueAccessor methods

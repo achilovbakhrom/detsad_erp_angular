@@ -1,4 +1,13 @@
 export const ACCESS_TOKEN = 'access-token';
 export const REFRESH_TOKEN = 'refresh-token';
-export const AUTH_STATE = 'auth';
 export const APP_STATE = 'app';
+export const COMMON_STATE = 'common';
+export const AUTH_STATE = 'auth';
+export const COMPANY_STATE = 'company';
+export const BRANCH_STATE = 'branch';
+export const GROUP_STATE = 'group';
+export const CHILD_STATE = 'child';
+export const POSITION_STATE = 'position';
+export const REASON_STATE = 'reason';
+export const DEPARTMENT_STATE = 'department';
+export const PAYMENT_TYPE_STATE = 'paymentType';

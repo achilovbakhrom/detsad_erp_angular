@@ -1,7 +1,7 @@
 <form [formGroup]="companyForm" (ngSubmit)="onSubmit()" nz-form [nzLayout]="'vertical'">
     <!-- Name -->
     <nz-form-item>
-      <nz-form-label [nzFor]="'name'" nzRequired>Name</nz-form-label>
+      <nz-form-label [nzFor]="'name'" nzRequired>Название</nz-form-label>
       <nz-form-control [nzErrorTip]="'Максимально 100 символов'">
         <input nz-input id="name" formControlName="name" placeholder="Введите название компании" />
       </nz-form-control>
