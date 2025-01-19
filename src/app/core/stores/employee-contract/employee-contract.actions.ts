@@ -1,15 +1,18 @@
 import { createAction, props } from '@ngrx/store';
 import { BaseListResponse } from '../../../model/BaseListResponse';
-import { Employee } from '../../../model/Employee';
+import {
+  EmployeeContract,
+  EmployeeContractInput,
+} from '../../../model/EmployeeContract';
 
 export const saveEmployeeContract = createAction(
   '[Employee Contract Form] Save Employee',
-  props<{ employeeContract: Employee }>()
+  props<{ employeeContract: EmployeeContractInput }>()
 );
 
 export const saveEmployeeContractSuccess = createAction(
   '[Employee Contract API] Save Employee Contract Success',
-  props<{ employeeContract: Employee }>()
+  props<{ employeeContract: EmployeeContract }>()
 );
 
 export const saveEmployeeContractFailure = createAction(
@@ -23,7 +26,7 @@ export const fetchEmployeeContractList = createAction(
 
 export const fetchEmployeeContractListSuccess = createAction(
   '[Employee Contract List Api] Fetch Employee Contract List Success',
-  props<BaseListResponse<Employee>>()
+  props<BaseListResponse<EmployeeContract>>()
 );
 
 export const fetchEmployeeContractListError = createAction(

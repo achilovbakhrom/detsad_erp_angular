@@ -27,13 +27,13 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../types';
 import { selectPage, selectSize } from './employee-contract.selectors';
 import { selectCompany } from '../common/common.selectors';
-import { EmployeeService } from '../../../employee/employee.service';
+import { EmployeeContractService } from '../../../employee-contract/employee-contract.service';
 
 @Injectable()
 export class EmployeeContractEffects {
   constructor(
     private actions$: Actions,
-    private employeeService: EmployeeService,
+    private employeeService: EmployeeContractService,
     private notificationService: NzNotificationService,
     private router: Router,
     private store: Store<AppState>
@@ -45,7 +45,7 @@ export class EmployeeContractEffects {
       withLatestFrom(this.store.select(selectCompany)),
       mergeMap(([action, company]) =>
         this.employeeService
-          .createEmployee({ ...action.employeeContract, company: company?.id })
+          .createEmployeeContract(action.employeeContract)
           .pipe(
             map((employee) => {
               this.showSuccessMessage();
