@@ -4,6 +4,8 @@ import { ChildState } from './child/child.state';
 import { CommonState } from './common/common.state';
 import { CompanyState } from './company/company.state';
 import { DepartmentState } from './department/department.state';
+import { EmployeeContractState } from './employee-contract/employee-contract.state';
+import { EmployeeState } from './employee/employee.state';
 import { GroupState } from './group/group.state';
 import { PaymentTypeState } from './payment-type/payment-type.state';
 import { PositionState } from './position/position.state';
@@ -20,4 +22,6 @@ export interface AppState {
   reason: ReasonState;
   department: DepartmentState;
   paymentType: PaymentTypeState;
+  employee: EmployeeState;
+  employeeContract: EmployeeContractState;
 }

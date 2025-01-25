@@ -48,3 +48,37 @@ export const deleteEmployeeContractById = createAction(
   '[Employee Contract Api] Delete By Id',
   props<{ id: number }>()
 );
+
+export const deleteEmployeeContractByIdSuccess = createAction(
+  '[Employee Contract Api] Delete By Id Success'
+);
+
+export const deleteEmployeeContractByIdError = createAction(
+  '[Employee Contract Api] Delete By Id Error'
+);
+
+export const fireEmployeeByContractId = createAction(
+  '[Employee Contract Api] Delete By Id',
+  props<{ id: number }>()
+);
+
+export const fireEmployeeByContractIdSuccess = createAction(
+  '[Employee Contract Api] Delete By Id Success'
+);
+
+export const fireEmployeeByContractIdError = createAction(
+  '[Employee Contract Api] Delete By Id Error'
+);
+
+export const hireEmployeeByContractId = createAction(
+  '[Employee Contract Api] Hire By Id',
+  props<{ id: number }>()
+);
+
+export const hireEmployeeByContractIdSuccess = createAction(
+  '[Employee Contract Api] Hire By Id Success'
+);
+
+export const hireEmployeeByContractIdError = createAction(
+  '[Employee Contract Api] Hire By Id Error'
+);

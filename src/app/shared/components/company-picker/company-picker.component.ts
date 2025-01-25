@@ -8,6 +8,7 @@ import {
   Self,
   OnChanges,
   SimpleChanges,
+  forwardRef,
 } from '@angular/core';
 import { Company } from '../../../model/company';
 import {
@@ -18,11 +19,7 @@ import {
   switchMap,
 } from 'rxjs';
 import { CompanyService } from '../../../company/company.service';
-import {
-  NgModel,
-  ControlValueAccessor,
-  NG_VALUE_ACCESSOR,
-} from '@angular/forms';
+import { NgModel, ControlValueAccessor } from '@angular/forms';
 import { Nillable } from '../../../model/nullable';
 
 @Component({
@@ -30,13 +27,6 @@ import { Nillable } from '../../../model/nullable';
   standalone: false,
   templateUrl: './company-picker.component.html',
   styleUrl: './company-picker.component.scss',
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: CompanyPickerComponent,
-      multi: true,
-    },
-  ],
 })
 export class CompanyPickerComponent
   implements OnInit, OnChanges, ControlValueAccessor

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AppState } from '../../core/stores/types';
 import { Store } from '@ngrx/store';
@@ -11,7 +11,7 @@ import { saveDepartment } from '../../core/stores/department/department.actions'
   templateUrl: './department-form.component.html',
   styleUrl: './department-form.component.scss',
 })
-export class DepartmentFormComponent {
+export class DepartmentFormComponent implements OnInit {
   departmentForm!: FormGroup;
 
   constructor(private fb: FormBuilder, private store: Store<AppState>) {}

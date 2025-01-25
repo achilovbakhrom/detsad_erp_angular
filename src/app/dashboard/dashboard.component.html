@@ -4,9 +4,6 @@
         <nz-space>
           <app-company-picker [selectedCompany]="company | async" (selectedCompanyChange)="setCompany($event)" />
         </nz-space>
-        <nz-space>
-          <div>{{ (company | async)?.name }}</div>
-        </nz-space>
       </nz-page-header-extra>
 
     </nz-page-header>
@@ -39,6 +36,11 @@
               </a>
             </li>
             <li nz-menu-item>
+              <a routerLink="/app/employee">
+                Сотрудники
+              </a>
+            </li>
+            <li nz-menu-item>
               <a routerLink="/app/position">
                 Позиции
               </a>
@@ -61,9 +63,13 @@
             
           </ul>
         </li>
+        <li nz-menu-item>
+          <a routerLink="/app/employee-contract">
+            Сотрудники (Контракт)
+          </a>
+        </li>    
         <li nz-menu-item>Клиенты</li>
         <li nz-menu-item>Контракты</li>    
-        <li nz-menu-item>Сотрудники</li>    
       </ul>
       <nz-flex nzFlex="1 1 0" nzVertical class="app-content__inner">
           <router-outlet></router-outlet>

@@ -11,3 +11,5 @@ export const POSITION_STATE = 'position';
 export const REASON_STATE = 'reason';
 export const DEPARTMENT_STATE = 'department';
 export const PAYMENT_TYPE_STATE = 'paymentType';
+export const EMPLOYEE_STATE = 'employee';
+export const EMPLOYEE_CONTRACT_STATE = 'employeeContract';

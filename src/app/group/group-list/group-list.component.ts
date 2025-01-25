@@ -1,4 +1,10 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { Observable } from 'rxjs';
 import { Nillable } from '../../model/nullable';
 import { Group } from '../../model/Group';
@@ -24,7 +30,7 @@ import {
   templateUrl: './group-list.component.html',
   styleUrl: './group-list.component.scss',
 })
-export class GroupListComponent {
+export class GroupListComponent implements OnDestroy, OnInit {
   data$: Observable<Nillable<Group[]>>;
   page$: Observable<Nillable<number>>;
   size$: Observable<Nillable<number>>;

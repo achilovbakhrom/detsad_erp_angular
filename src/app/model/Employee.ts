@@ -1,4 +1,4 @@
 import { Company } from './company';
 import { Person } from './Person';
 
-export type Employee = Person & { company: Company };
+export type Employee = Person & { id?: number; company: Company };

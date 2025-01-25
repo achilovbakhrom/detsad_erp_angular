@@ -30,7 +30,6 @@ import { commonReducer } from './core/stores/common/common.reducer';
 import { getInitialCommonState } from './core/stores/common/common.state';
 import { groupReducer } from './core/stores/group/group.reducer';
 import { getInitialGroupState } from './core/stores/group/group.state';
-import { ChildComponent } from './child/child.component';
 import { GroupEffects } from './core/stores/group/group.effects';
 import { ChildEffects } from './core/stores/child/child.effects';
 import { childReducer } from './core/stores/child/child.reducer';
@@ -47,6 +46,12 @@ import { getInitialDepartmentState } from './core/stores/department/department.s
 import { paymentTypeReducer } from './core/stores/payment-type/payment-type.reducer';
 import { getInitialPaymentTypeState } from './core/stores/payment-type/payment-type.state';
 import { PaymentTypeEffects } from './core/stores/payment-type/payment-type.effects';
+import { EmployeeContractEffects } from './core/stores/employee-contract/employee-contract.effects';
+import { employeeContractReducer } from './core/stores/employee-contract/employee-contract.reducer';
+import { getInitialEmployeeContractState } from './core/stores/employee-contract/employee-contract.state';
+import { employeeReducer } from './core/stores/employee/employee.reducer';
+import { getInitialEmployeeState } from './core/stores/employee/employee.state';
+import { EmployeeEffects } from './core/stores/employee/employee.effects';
 
 registerLocaleData(en);
 
@@ -68,6 +73,8 @@ registerLocaleData(en);
         reason: reasonReducer,
         department: departmentReducer,
         paymentType: paymentTypeReducer,
+        employee: employeeReducer,
+        employeeContract: employeeContractReducer,
       },
       {
         metaReducers: [localStorageSyncReducer],
@@ -82,6 +89,8 @@ registerLocaleData(en);
           reason: getInitialReasonState(),
           department: getInitialDepartmentState(),
           paymentType: getInitialPaymentTypeState(),
+          employee: getInitialEmployeeState(),
+          employeeContract: getInitialEmployeeContractState(),
         },
       }
     ),
@@ -95,6 +104,8 @@ registerLocaleData(en);
       ReasonEffects,
       DepartmentEffects,
       PaymentTypeEffects,
+      EmployeeEffects,
+      EmployeeContractEffects,
     ]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
   ],

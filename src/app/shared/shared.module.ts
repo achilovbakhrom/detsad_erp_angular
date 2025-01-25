@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { CompanyPickerComponent } from './components/company-picker/company-picker.component';
 import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
 import { NzInputModule } from 'ng-zorro-antd/input';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { EmployeePickerComponent } from './components/employee-picker/employee-picker.component';
 import { PositionPickerComponent } from './components/position-picker/position-picker.component';
@@ -13,15 +13,32 @@ import { ChildPickerComponent } from './components/child-picker/child-picker.com
 import { GroupPickerComponent } from './components/group-picker/group-picker.component';
 
 @NgModule({
-  declarations: [CompanyPickerComponent, EmployeePickerComponent, PositionPickerComponent, DepartmentPickerComponent, BranchPickerComponent, ChildPickerComponent, GroupPickerComponent],
+  declarations: [
+    CompanyPickerComponent,
+    EmployeePickerComponent,
+    PositionPickerComponent,
+    DepartmentPickerComponent,
+    BranchPickerComponent,
+    ChildPickerComponent,
+    GroupPickerComponent,
+  ],
   imports: [
     CommonModule,
     NzAutocompleteModule,
     NzInputModule,
     NzIconModule,
     FormsModule,
+    ReactiveFormsModule,
     CommonModule,
   ],
-  exports: [CompanyPickerComponent],
+  exports: [
+    CompanyPickerComponent,
+    EmployeePickerComponent,
+    PositionPickerComponent,
+    DepartmentPickerComponent,
+    BranchPickerComponent,
+    ChildPickerComponent,
+    GroupPickerComponent,
+  ],
 })
 export class SharedModule {}

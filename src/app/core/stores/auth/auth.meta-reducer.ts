@@ -11,6 +11,8 @@ import {
   POSITION_STATE,
   DEPARTMENT_STATE,
   PAYMENT_TYPE_STATE,
+  EMPLOYEE_CONTRACT_STATE,
+  EMPLOYEE_STATE,
 } from '../../../constants';
 import { pick } from 'ramda';
 import { AppState } from '../types';
@@ -26,6 +28,8 @@ const WHITELIST = [
   POSITION_STATE,
   DEPARTMENT_STATE,
   PAYMENT_TYPE_STATE,
+  EMPLOYEE_STATE,
+  EMPLOYEE_CONTRACT_STATE,
 ] as const;
 
 export function localStorageSyncReducer(

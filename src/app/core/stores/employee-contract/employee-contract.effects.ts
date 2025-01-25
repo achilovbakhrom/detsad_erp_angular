@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { of } from 'rxjs';
+import { merge, of } from 'rxjs';
 import {
   catchError,
   map,
@@ -11,9 +11,17 @@ import {
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import {
   deleteEmployeeContractById,
+  deleteEmployeeContractByIdError,
+  deleteEmployeeContractByIdSuccess,
   fetchEmployeeContractList,
   fetchEmployeeContractListError,
   fetchEmployeeContractListSuccess,
+  fireEmployeeByContractId,
+  fireEmployeeByContractIdError,
+  fireEmployeeByContractIdSuccess,
+  hireEmployeeByContractId,
+  hireEmployeeByContractIdError,
+  hireEmployeeByContractIdSuccess,
   saveEmployeeContract,
   saveEmployeeContractFailure,
   saveEmployeeContractSuccess,
@@ -33,18 +41,18 @@ import { EmployeeContractService } from '../../../employee-contract/employee-con
 export class EmployeeContractEffects {
   constructor(
     private actions$: Actions,
-    private employeeService: EmployeeContractService,
+    private employeeContractService: EmployeeContractService,
     private notificationService: NzNotificationService,
     private router: Router,
     private store: Store<AppState>
   ) {}
 
-  saveEmployeeContract$ = createEffect(() =>
+  createEmployeeContract$ = createEffect(() =>
     this.actions$.pipe(
       ofType(saveEmployeeContract),
       withLatestFrom(this.store.select(selectCompany)),
       mergeMap(([action, company]) =>
-        this.employeeService
+        this.employeeContractService
           .createEmployeeContract(action.employeeContract)
           .pipe(
             map((employee) => {
@@ -75,8 +83,8 @@ export class EmployeeContractEffects {
       ),
 
       switchMap(([_, page, size, company]) =>
-        this.employeeService
-          .fetchEmployeeList({ page, size, company: company?.id })
+        this.employeeContractService
+          .fetchEmployeeContractList({ page, size, company: company?.id })
           .pipe(
             map((response) => fetchEmployeeContractListSuccess(response)),
             catchError((error) =>
@@ -96,14 +104,78 @@ export class EmployeeContractEffects {
     )
   );
 
+  fireEmployee$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fireEmployeeByContractId),
+      mergeMap((action) =>
+        this.employeeContractService.fireEmployeeContractById(action.id).pipe(
+          tap(() =>
+            this.notificationService.success(
+              'Успешно',
+              'Сотрудник уволен успешно!'
+            )
+          ),
+          mergeMap(() =>
+            merge(
+              of(fetchEmployeeContractList()),
+              of(fireEmployeeByContractIdSuccess())
+            )
+          ),
+          catchError((error) =>
+            of().pipe(
+              tap(() => this.showErrorMessage(error)),
+              map(() => fireEmployeeByContractIdError())
+            )
+          )
+        )
+      )
+    )
+  );
+
   deleteEmployeeContractById$ = createEffect(() =>
     this.actions$.pipe(
       ofType(deleteEmployeeContractById),
       mergeMap((action) =>
-        this.employeeService.deleteEmployeeById(action.id).pipe(
-          map(() => fetchEmployeeContractList()),
+        this.employeeContractService.deleteEmployeeContractById(action.id).pipe(
+          mergeMap(() =>
+            merge(
+              of(fetchEmployeeContractList()),
+              of(deleteEmployeeContractByIdSuccess())
+            )
+          ),
           catchError((error) =>
-            of().pipe(tap(() => this.showErrorMessage(error)))
+            of().pipe(
+              tap(() => this.showErrorMessage(error)),
+              map(() => deleteEmployeeContractByIdError())
+            )
+          )
+        )
+      )
+    )
+  );
+
+  hireEmployee$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(hireEmployeeByContractId),
+      mergeMap((action) =>
+        this.employeeContractService.hireEmployeeContractById(action.id).pipe(
+          tap(() =>
+            this.notificationService.success(
+              'Успешно',
+              'Сотрудник успешно принят на работу!'
+            )
+          ),
+          mergeMap(() =>
+            merge(
+              of(fetchEmployeeContractList()),
+              of(hireEmployeeByContractIdSuccess())
+            )
+          ),
+          catchError((error) =>
+            of().pipe(
+              tap(() => this.showErrorMessage(error)),
+              map(() => hireEmployeeByContractIdError())
+            )
           )
         )
       )

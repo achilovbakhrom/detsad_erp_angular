@@ -2,7 +2,7 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { EmployeeContractState } from './employee-contract.state';
 
 export const selectEmployeeState =
-  createFeatureSelector<EmployeeContractState>('employee');
+  createFeatureSelector<EmployeeContractState>('employeeContract');
 
 export const selectValueFromState = <T>(
   fn: (state: EmployeeContractState) => T
@@ -20,7 +20,7 @@ export const selectError = selectValueFromState(
   (state: EmployeeContractState) => state.error
 );
 
-export const selectEmployeeList = selectValueFromState(
+export const selectEmployeeContractList = selectValueFromState(
   (state: EmployeeContractState) => state.data
 );
 

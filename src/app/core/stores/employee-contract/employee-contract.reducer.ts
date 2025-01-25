@@ -6,9 +6,11 @@ import {
   saveEmployeeContract,
   saveEmployeeContractFailure,
   saveEmployeeContractSuccess,
+  setPage,
+  setSize,
 } from './employee-contract.actions';
 
-export const employeeReducer = createReducer(
+export const employeeContractReducer = createReducer(
   getInitialEmployeeContractState(),
   on(saveEmployeeContract, (state) => ({
     ...state,
@@ -35,5 +37,13 @@ export const employeeReducer = createReducer(
     ...state,
     error,
     loading: false,
+  })),
+  on(setPage, (state, { page }) => ({
+    ...state,
+    page: page,
+  })),
+  on(setSize, (state, { size }) => ({
+    ...state,
+    size: size,
   }))
 );

@@ -1,1 +1,70 @@
-<p>employee-contract-list works!</p>
+<div #containerEl class="content">
+    <div nz-flex class="header" nzJustify="flex-end" nzAlign="center">
+        <button nz-button nzType="primary" [routerLink]="'/app/employee-contract/create'">Добавить</button>
+    </div>
+    <nz-table
+        #table
+        *ngIf="(data$ | async) as data"
+        [nzData]="data || []"
+        [nzPageIndex]="(size$ | async) ?? 1"
+        (nzPageIndexChange)="setPage($event)"
+        [nzPageSize]="(size$ | async) ?? 20"
+        (nzPageSizeChange)="setSize($event)"        
+        [nzScroll]="{ y: tableHeight }"
+    >
+        <thead>
+          <tr>
+            <th>Дата</th>
+            <th>ФИО</th>
+            <th>Должностьth>
+            <th>Отдел</th>
+            <th>Филиал</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of data">
+            <td>{{ row.date }}</td>
+            <td>{{ row.employee.first_name + ' ' + row.employee.last_name + ' ' + row.employee.middle_name }}</td>
+            <td>{{ row.position.title }}</td>
+            <td>{{ row.department.title }}</td>
+            <td>{{ row.branch.name }}</td>
+            <td>{{ row.salary }}</td>
+            <td>
+              <button
+                *ngIf="row.status === 'created'"
+                nz-button
+                nzType="text"
+                nz-popconfirm
+                nzPopconfirmTitle="Вы действительно хотите удалить сотрудника?"
+                (nzOnConfirm)="onDelete(row)"
+                [nzOkText]="'Да'"
+                [nzCancelText]="'Нет'"
+              >Удалить</button>
+              <button
+                *ngIf="row.status === 'created'"
+                nz-button
+                nzType="text"
+                nzOkType
+                nz-popconfirm
+                nzPopconfirmTitle="Вы действительно хотите взять на работу?"
+                (nzOnConfirm)="onHire(row)"
+                [nzOkText]="'Да'"
+                [nzCancelText]="'Нет'"
+              >Взять</button>
+              <button
+                *ngIf="row.status === 'active'"
+                nz-button
+                nzType="text"
+                nzOkType
+                nz-popconfirm
+                nzPopconfirmTitle="Вы действительно хотите уволить на работу?"
+                (nzOnConfirm)="onFire(row)"
+                [nzOkText]="'Да'"
+                [nzCancelText]="'Нет'"
+              >Уволить</button>
+            </td>
+          </tr>
+        </tbody>
+    </nz-table>
+</div>

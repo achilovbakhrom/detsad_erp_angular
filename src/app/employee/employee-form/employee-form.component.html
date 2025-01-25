@@ -1,1 +1,61 @@
-<p>employee-form works!</p>
+<form [formGroup]="employeeForm" (ngSubmit)="onSubmit()" nz-form nzLayout="vertical">
+    
+    <!-- Firstname -->
+    <nz-form-item>
+        <nz-form-label nzFor="first_name" nzRequired>Имя</nz-form-label>
+        <nz-form-control nzErrorTip="Максимально 100 символов">
+            <input nz-input id="first_name" formControlName="first_name" placeholder="Введите Имя" />
+        </nz-form-control>
+    </nz-form-item>
+
+    <!-- Lastname -->
+    <nz-form-item>
+        <nz-form-label nzFor="last_name" nzRequired>Фамилия</nz-form-label>
+        <nz-form-control nzErrorTip="Максимально 100 символов">
+            <input nz-input id="last_name" formControlName="last_name" placeholder="Введите Фамилию" />
+        </nz-form-control>
+    </nz-form-item>
+
+    <!-- Middlename -->
+    <nz-form-item>
+        <nz-form-label nzFor="middle_name" nzRequired>Отчество</nz-form-label>
+        <nz-form-control nzErrorTip="Максимально 100 символов">
+            <input nz-input id="middle_name" formControlName="middle_name" placeholder="Введите Отчества" />
+        </nz-form-control>
+    </nz-form-item>
+
+    <!-- DOB -->
+    <nz-form-item>
+        <nz-form-label nzFor="date_of_birth">Дата рождения</nz-form-label>
+        <nz-form-control>
+            <nz-date-picker
+                id="date_of_birth"
+                formControlName="date_of_birth"
+                nzPlaceHolder="Вырерите дату рожедния"
+                nzFormat="yyyy-MM-dd"
+            ></nz-date-picker>
+        </nz-form-control>
+    </nz-form-item>
+
+    <!-- Description -->
+    <nz-form-item>
+        <nz-form-label nzFor="description">Описание</nz-form-label>
+        <nz-form-control>
+            <textarea
+                nz-input
+                id="description"
+                formControlName="description"
+                placeholder="Введите описание"
+                rows="4"
+            ></textarea>
+        </nz-form-control>
+    </nz-form-item>
+
+    <!-- Submit Button -->
+     <nz-form-item>
+        <nz-form-control>
+            <button nz-button nzType="primary" [disabled]="!employeeForm.valid">Сохранить</button>
+        </nz-form-control>
+     </nz-form-item>
+
+</form>

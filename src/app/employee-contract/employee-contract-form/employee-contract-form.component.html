@@ -1,1 +1,73 @@
-<p>employee-contract-form works!</p>
+<form [formGroup]="employeeContractForm" (ngSubmit)="onSubmit()" nz-form nzLayout="vertical">
+    <!-- Contract Date -->
+    <nz-form-item>
+        <nz-form-label nzFor="date">Дата</nz-form-label>
+        <nz-form-control>
+            <nz-date-picker
+                id="date"
+                formControlName="date"
+                nzPlaceHolder="Вырерите дату"
+                nzFormat="yyyy-MM-dd"
+            ></nz-date-picker>
+        </nz-form-control>
+    </nz-form-item>
+
+    <!-- Employee -->
+     <nz-form-item>
+        <nz-form-label nzFor="employee">Сотрудник</nz-form-label>
+        <nz-form-control>
+            <app-employee-picker id="employee" formControlName="employee"></app-employee-picker>
+        </nz-form-control>
+     </nz-form-item>
+
+     <!-- Position -->
+     <nz-form-item>
+        <nz-form-label nzFor="position">Должность</nz-form-label>
+        <nz-form-control>
+            <app-position-picker id="position" formControlName="position"></app-position-picker>
+        </nz-form-control>
+     </nz-form-item>
+
+     <!-- Department -->
+     <nz-form-item>
+        <nz-form-label nzFor="department">Отдел</nz-form-label>
+        <nz-form-control>
+            <app-department-picker id="department" formControlName="department"></app-department-picker>
+        </nz-form-control>
+     </nz-form-item>
+
+     <!-- Salary -->
+    <nz-form-item>
+        <nz-form-label nzFor="salary">Зарплата</nz-form-label>
+        <nz-form-control>
+            <input
+                id="salary"
+                formControlName="salary"
+                nzPlaceHolder="Укажите зарплату"
+                nz-input
+                type="number"
+            />
+        </nz-form-control>
+    </nz-form-item>
+
+    <!-- Branch -->
+    <nz-form-item>
+        <nz-form-label nzFor="branch">Филиал</nz-form-label>
+        <nz-form-control>
+            <app-branch-picker id="branch" formControlName="branch"></app-branch-picker>
+        </nz-form-control>
+     </nz-form-item>
+
+     <!-- Submit Button -->
+     <nz-form-item>
+        <nz-form-control>
+            <button
+                nz-button
+                nzType="primary"
+                [disabled]="!employeeContractForm.valid"
+                >
+                Сохранить
+            </button>
+        </nz-form-control>
+     </nz-form-item>
+</form>

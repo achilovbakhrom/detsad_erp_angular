@@ -5,6 +5,7 @@ import { Nillable } from '../../../model/nullable';
 export type EmployeeContractState = BaseListState<EmployeeContract> & {
   employee: Nillable<EmployeeContract>;
   error: any;
+  isActionGoing: boolean;
 };
 
 export const initialState: EmployeeContractState = {
@@ -15,6 +16,7 @@ export const initialState: EmployeeContractState = {
   employee: null,
   loading: false,
   error: null,
+  isActionGoing: false,
 };
 
 export function getInitialEmployeeContractState(): EmployeeContractState {

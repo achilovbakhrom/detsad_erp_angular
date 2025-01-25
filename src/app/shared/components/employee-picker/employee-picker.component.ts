@@ -1,6 +1,7 @@
 import {
   Component,
   EventEmitter,
+  forwardRef,
   Input,
   OnChanges,
   OnInit,
@@ -10,16 +11,28 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { EmployeeService } from '../../../employee/employee.service';
-import { ControlValueAccessor, NgModel } from '@angular/forms';
+import {
+  ControlValueAccessor,
+  NG_VALUE_ACCESSOR,
+  NgModel,
+} from '@angular/forms';
 import { Nillable } from '../../../model/nullable';
 import { Employee } from '../../../model/Employee';
 import {
+  combineLatest,
   debounceTime,
   distinctUntilChanged,
   map,
+  Observable,
+  of,
   Subject,
   switchMap,
+  withLatestFrom,
 } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../../core/stores/types';
+import { Company } from '../../../model/company';
+import { selectCompany } from '../../../core/stores/common/common.selectors';
 
 @Component({
   selector: 'app-employee-picker',
@@ -27,6 +40,13 @@ import {
 
   templateUrl: './employee-picker.component.html',
   styleUrl: './employee-picker.component.scss',
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => EmployeePickerComponent),
+      multi: true,
+    },
+  ],
 })
 export class EmployeePickerComponent
   implements OnInit, OnChanges, ControlValueAccessor
@@ -39,14 +59,18 @@ export class EmployeePickerComponent
   loading = false;
   inputValue: string = '';
   private searchSubject = new Subject<string>();
+  private currentCompany: Observable<Nillable<Company>>;
 
   private _onChange: (value: any) => void = () => {};
   private _onTouched: () => void = () => {};
 
   constructor(
     private employeeService: EmployeeService,
-    @Optional() @Self() public ngModel: NgModel
-  ) {}
+    @Optional() @Self() public ngModel: NgModel,
+    private store: Store<AppState>
+  ) {
+    this.currentCompany = this.store.select(selectCompany);
+  }
 
   ngOnChanges(changes: SimpleChanges) {
     if (
@@ -58,7 +82,7 @@ export class EmployeePickerComponent
     }
   }
 
-  private getEmployeeName(arg: Employee): string {
+  protected getEmployeeName(arg: Employee): string {
     return [arg.first_name, arg.last_name, arg.middle_name]
       .filter((item) => item != null)
       .join(' ');
@@ -69,11 +93,13 @@ export class EmployeePickerComponent
       .pipe(
         debounceTime(400),
         distinctUntilChanged(),
-        switchMap((value) => {
+        switchMap((value) => combineLatest([this.currentCompany, of(value)])),
+        switchMap(([company, value]) => {
           return this.employeeService.fetchEmployeeList({
             page: 1,
             size: 50,
             search: value,
+            company: company?.id,
           });
         }),
         map((response) => response.results)

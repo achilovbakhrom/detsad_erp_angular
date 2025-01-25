@@ -63,6 +63,18 @@ const routes: Routes = [
             (m) => m.PaymentTypeModule
           ),
       },
+      {
+        path: 'employee',
+        loadChildren: () =>
+          import('../employee/employee.module').then((m) => m.EmployeeModule),
+      },
+      {
+        path: 'employee-contract',
+        loadChildren: () =>
+          import('../employee-contract/employee-contract.module').then(
+            (m) => m.EmployeeContractModule
+          ),
+      },
     ],
   },
 ];
