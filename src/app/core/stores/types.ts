@@ -1,11 +1,13 @@
 import { AuthState } from './auth/auth.state';
 import { BranchState } from './branch/branch.state';
+import { ChildContractState } from './child-contract/child-contract.state';
 import { ChildState } from './child/child.state';
 import { CommonState } from './common/common.state';
 import { CompanyState } from './company/company.state';
 import { DepartmentState } from './department/department.state';
 import { EmployeeContractState } from './employee-contract/employee-contract.state';
 import { EmployeeState } from './employee/employee.state';
+import { GroupRegistrationState } from './group-registration/group-registration.state';
 import { GroupState } from './group/group.state';
 import { PaymentTypeState } from './payment-type/payment-type.state';
 import { PositionState } from './position/position.state';
@@ -24,4 +26,6 @@ export interface AppState {
   paymentType: PaymentTypeState;
   employee: EmployeeState;
   employeeContract: EmployeeContractState;
+  groupRegistration: GroupRegistrationState;
+  childContract: ChildContractState;
 }

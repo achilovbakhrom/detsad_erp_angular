@@ -1,7 +1,7 @@
 <div style="display: flex; align-items: center;">
     <input
       nz-input
-      placeholder="Выберите клиена"
+      placeholder="Выберите группу"
       [(ngModel)]="inputValue"
       [nzAutocomplete]="autocomplete"
       (ngModelChange)="onChange($event)"
@@ -21,7 +21,7 @@
         [nzValue]="item.id"
         (click)="onPick(item)"
       >
-        {{ getChildName(item) }}
+        {{ item?.group?.name }}
       </nz-auto-option>
     </nz-autocomplete>
   </div>

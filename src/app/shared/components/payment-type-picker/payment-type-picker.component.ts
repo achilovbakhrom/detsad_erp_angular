@@ -8,8 +8,9 @@ import {
   Self,
   SimpleChanges,
 } from '@angular/core';
-import { Child } from '../../../model/Child';
+import { NG_VALUE_ACCESSOR, NgModel } from '@angular/forms';
 import { Nillable } from '../../../model/nullable';
+import { PaymentType } from '../../../model/PaymentType';
 import {
   combineLatest,
   debounceTime,
@@ -21,32 +22,33 @@ import {
   switchMap,
 } from 'rxjs';
 import { Company } from '../../../model/company';
-import { ChildService } from '../../../child/child.service';
-import { NG_VALUE_ACCESSOR, NgModel } from '@angular/forms';
+import { PaymentTypeService } from '../../../payment-type/payment-type.service';
 import { AppState } from '../../../core/stores/types';
 import { Store } from '@ngrx/store';
 import { selectCompany } from '../../../core/stores/common/common.selectors';
 
 @Component({
-  selector: 'app-child-picker',
+  selector: 'app-payment-type-picker',
   standalone: false,
 
-  templateUrl: './child-picker.component.html',
-  styleUrl: './child-picker.component.scss',
+  templateUrl: './payment-type-picker.component.html',
+  styleUrl: './payment-type-picker.component.scss',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => ChildPickerComponent),
+      useExisting: forwardRef(() => PaymentTypePickerComponent),
       multi: true,
     },
   ],
 })
-export class ChildPickerComponent {
-  @Input() selectedChild: Nillable<Child>;
+export class PaymentTypePickerComponent {
+  @Input() selectedPaymentType: Nillable<PaymentType>;
 
-  @Output() selectedChildChange = new EventEmitter<Child | undefined>();
+  @Output() selectedPaymentTypeChange = new EventEmitter<
+    PaymentType | undefined
+  >();
 
-  options: Child[] = [];
+  options: PaymentType[] = [];
   loading = false;
   inputValue: string = '';
   private searchSubject = new Subject<string>();
@@ -56,7 +58,7 @@ export class ChildPickerComponent {
   private _onTouched: () => void = () => {};
 
   constructor(
-    private childService: ChildService,
+    private paymentTypeService: PaymentTypeService,
     @Optional() @Self() public ngModel: NgModel,
     private store: Store<AppState>
   ) {
@@ -64,16 +66,17 @@ export class ChildPickerComponent {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['selectedChild'] && changes['selectedChild'].currentValue) {
-      const child = changes['selectedChild'].currentValue;
-      this.inputValue = this.getChildName(child);
+    if (
+      changes['selectedPaymentType'] &&
+      changes['selectedPaymentType'].currentValue
+    ) {
+      const paymentType = changes['selectedPaymentType'].currentValue;
+      this.inputValue = this.getPaymentTypeName(paymentType);
     }
   }
 
-  protected getChildName(arg: Child): string {
-    return [arg.first_name, arg.last_name, arg.middle_name]
-      .filter((item) => item != null)
-      .join(' ');
+  protected getPaymentTypeName(arg: PaymentType): string {
+    return arg.name ?? '';
   }
 
   ngOnInit(): void {
@@ -83,7 +86,7 @@ export class ChildPickerComponent {
         distinctUntilChanged(),
         switchMap((value) => combineLatest([this.currentCompany, of(value)])),
         switchMap(([company, value]) => {
-          return this.childService.fetchChildList({
+          return this.paymentTypeService.fetchPaymentTypeList({
             page: 1,
             size: 50,
             search: value,
@@ -92,8 +95,8 @@ export class ChildPickerComponent {
         }),
         map((response) => response.results)
       )
-      .subscribe((childList) => {
-        this.options = childList;
+      .subscribe((paymentTypeList) => {
+        this.options = paymentTypeList;
       });
 
     if (this.ngModel) {
@@ -110,19 +113,19 @@ export class ChildPickerComponent {
     this.searchSubject.next(value);
 
     if (this.inputValue !== value) {
-      this.selectedChildChange.emit(undefined);
+      this.selectedPaymentTypeChange.emit(undefined);
     }
   }
 
-  onPick(child: Child): void {
-    this.inputValue = this.getChildName(child);
-    this.selectedChildChange.emit(child);
-    this._onChange(child);
+  onPick(paymentType: PaymentType): void {
+    this.inputValue = this.getPaymentTypeName(paymentType);
+    this.selectedPaymentTypeChange.emit(paymentType);
+    this._onChange(paymentType);
   }
 
   clearSelection(): void {
     this.inputValue = '';
-    this.selectedChildChange.emit(undefined);
+    this.selectedPaymentTypeChange.emit(undefined);
     this._onChange(undefined);
     this.searchSubject.next('');
   }
@@ -130,11 +133,11 @@ export class ChildPickerComponent {
   // ControlValueAccessor methods
   writeValue(value: any): void {
     if (value) {
-      this.inputValue = this.getChildName(value);
-      this.selectedChild = value;
+      this.inputValue = this.getPaymentTypeName(value);
+      this.selectedPaymentType = value;
     } else {
       this.inputValue = '';
-      this.selectedChild = undefined;
+      this.selectedPaymentType = undefined;
     }
   }
 

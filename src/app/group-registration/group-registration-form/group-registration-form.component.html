@@ -1,0 +1,43 @@
+<form [formGroup]="groupRegistrationForm" (ngSubmit)="onSubmit()" nz-form nzLayout="vertical">
+    <!-- Date -->
+    <nz-form-item>
+        <nz-form-label nzFor="date">Дата</nz-form-label>
+        <nz-form-control>
+            <nz-date-picker
+                id="date"
+                formControlName="date"
+                nzPlaceHolder="Вырерите дату"
+                nzFormat="yyyy-MM-dd"
+            ></nz-date-picker>
+        </nz-form-control>
+    </nz-form-item>
+
+    <!-- Group -->
+     <nz-form-item>
+        <nz-form-label nzFor="group">Группа</nz-form-label>
+        <nz-form-control>
+            <app-group-picker id="group" formControlName="group"></app-group-picker>
+        </nz-form-control>
+     </nz-form-item>
+
+    <!-- Branch -->
+    <nz-form-item>
+        <nz-form-label nzFor="branch">Филиал</nz-form-label>
+        <nz-form-control>
+            <app-branch-picker id="branch" formControlName="branch"></app-branch-picker>
+        </nz-form-control>
+     </nz-form-item>
+
+     <!-- Submit Button -->
+     <nz-form-item>
+        <nz-form-control>
+            <button
+                nz-button
+                nzType="primary"
+                [disabled]="!groupRegistrationForm.valid"
+                >
+                Сохранить
+            </button>
+        </nz-form-control>
+     </nz-form-item>
+</form>

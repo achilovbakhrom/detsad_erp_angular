@@ -1,5 +1,5 @@
 <div class="app-dashboard-wrapper">
-    <nz-page-header nzBackIcon nzTitle="Dashboard" class="app-header">
+    <nz-page-header nzTitle="Дешборд" class="app-header">
       <nz-page-header-extra>
         <nz-space>
           <app-company-picker [selectedCompany]="company | async" (selectedCompanyChange)="setCompany($event)" />
@@ -9,10 +9,16 @@
     </nz-page-header>
     <nz-flex nzGap="0" class="app-content">
       <ul nz-menu nzMode="inline" class="app-side-bar">
+        <li nz-menu-item nzSelected>
+          <a routerLink="/app/main">
+            Главная
+          </a>
+        </li>   
         <li
           nz-submenu
           nzTitle="Справочники"
           nzIcon="mail"
+          nzOpen
         >
           <ul>
             <li nz-menu-item>
@@ -63,13 +69,21 @@
             
           </ul>
         </li>
-        <li nz-menu-item>
+        <li nz-menu-item nzIcon="user">
           <a routerLink="/app/employee-contract">
             Сотрудники (Контракт)
           </a>
         </li>    
-        <li nz-menu-item>Клиенты</li>
-        <li nz-menu-item>Контракты</li>    
+        <li nz-menu-item>
+          <a routerLink="/app/group-registration">
+            Группы (Регистрация)
+          </a>
+        </li>
+        <li nz-menu-item>
+          <a routerLink="/app/child-contract">
+            Клиенты (Контракт)
+          </a>
+        </li>    
       </ul>
       <nz-flex nzFlex="1 1 0" nzVertical class="app-content__inner">
           <router-outlet></router-outlet>

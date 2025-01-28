@@ -8,7 +8,7 @@ import {
   Self,
   SimpleChanges,
 } from '@angular/core';
-import { Child } from '../../../model/Child';
+import { GroupRegistration } from '../../../model/GroupRegistration';
 import { Nillable } from '../../../model/nullable';
 import {
   combineLatest,
@@ -21,32 +21,34 @@ import {
   switchMap,
 } from 'rxjs';
 import { Company } from '../../../model/company';
-import { ChildService } from '../../../child/child.service';
+import { GroupRegistrationService } from '../../../group-registration/group-registration.service';
 import { NG_VALUE_ACCESSOR, NgModel } from '@angular/forms';
 import { AppState } from '../../../core/stores/types';
 import { Store } from '@ngrx/store';
 import { selectCompany } from '../../../core/stores/common/common.selectors';
 
 @Component({
-  selector: 'app-child-picker',
+  selector: 'app-group-registration-picker',
   standalone: false,
 
-  templateUrl: './child-picker.component.html',
-  styleUrl: './child-picker.component.scss',
+  templateUrl: './group-registration-picker.component.html',
+  styleUrl: './group-registration-picker.component.scss',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => ChildPickerComponent),
+      useExisting: forwardRef(() => GroupRegistrationPickerComponent),
       multi: true,
     },
   ],
 })
-export class ChildPickerComponent {
-  @Input() selectedChild: Nillable<Child>;
+export class GroupRegistrationPickerComponent {
+  @Input() selectedGroupRegistration: Nillable<GroupRegistration>;
 
-  @Output() selectedChildChange = new EventEmitter<Child | undefined>();
+  @Output() selectedGroupRegistrationChange = new EventEmitter<
+    GroupRegistration | undefined
+  >();
 
-  options: Child[] = [];
+  options: GroupRegistration[] = [];
   loading = false;
   inputValue: string = '';
   private searchSubject = new Subject<string>();
@@ -56,7 +58,7 @@ export class ChildPickerComponent {
   private _onTouched: () => void = () => {};
 
   constructor(
-    private childService: ChildService,
+    private groupRegistrationService: GroupRegistrationService,
     @Optional() @Self() public ngModel: NgModel,
     private store: Store<AppState>
   ) {
@@ -64,16 +66,13 @@ export class ChildPickerComponent {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['selectedChild'] && changes['selectedChild'].currentValue) {
-      const child = changes['selectedChild'].currentValue;
-      this.inputValue = this.getChildName(child);
+    if (
+      changes['selectedGroupRegistration'] &&
+      changes['selectedGroupRegistration'].currentValue
+    ) {
+      const branch = changes['selectedGroupRegistration'].currentValue;
+      this.inputValue = branch?.group?.name;
     }
-  }
-
-  protected getChildName(arg: Child): string {
-    return [arg.first_name, arg.last_name, arg.middle_name]
-      .filter((item) => item != null)
-      .join(' ');
   }
 
   ngOnInit(): void {
@@ -83,7 +82,7 @@ export class ChildPickerComponent {
         distinctUntilChanged(),
         switchMap((value) => combineLatest([this.currentCompany, of(value)])),
         switchMap(([company, value]) => {
-          return this.childService.fetchChildList({
+          return this.groupRegistrationService.fetchGroupRegistrationList({
             page: 1,
             size: 50,
             search: value,
@@ -92,8 +91,8 @@ export class ChildPickerComponent {
         }),
         map((response) => response.results)
       )
-      .subscribe((childList) => {
-        this.options = childList;
+      .subscribe((options) => {
+        this.options = options;
       });
 
     if (this.ngModel) {
@@ -110,19 +109,19 @@ export class ChildPickerComponent {
     this.searchSubject.next(value);
 
     if (this.inputValue !== value) {
-      this.selectedChildChange.emit(undefined);
+      this.selectedGroupRegistrationChange.emit(undefined);
     }
   }
 
-  onPick(child: Child): void {
-    this.inputValue = this.getChildName(child);
-    this.selectedChildChange.emit(child);
-    this._onChange(child);
+  onPick(groupRegistration: GroupRegistration): void {
+    this.inputValue = groupRegistration?.group?.name ?? '';
+    this.selectedGroupRegistrationChange.emit(groupRegistration);
+    this._onChange(groupRegistration);
   }
 
   clearSelection(): void {
     this.inputValue = '';
-    this.selectedChildChange.emit(undefined);
+    this.selectedGroupRegistrationChange.emit(undefined);
     this._onChange(undefined);
     this.searchSubject.next('');
   }
@@ -130,11 +129,11 @@ export class ChildPickerComponent {
   // ControlValueAccessor methods
   writeValue(value: any): void {
     if (value) {
-      this.inputValue = this.getChildName(value);
-      this.selectedChild = value;
+      this.inputValue = value.name;
+      this.selectedGroupRegistration = value;
     } else {
       this.inputValue = '';
-      this.selectedChild = undefined;
+      this.selectedGroupRegistration = undefined;
     }
   }
 

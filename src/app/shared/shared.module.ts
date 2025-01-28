@@ -11,6 +11,8 @@ import { DepartmentPickerComponent } from './components/department-picker/depart
 import { BranchPickerComponent } from './components/branch-picker/branch-picker.component';
 import { ChildPickerComponent } from './components/child-picker/child-picker.component';
 import { GroupPickerComponent } from './components/group-picker/group-picker.component';
+import { GroupRegistrationPickerComponent } from './components/group-registration-picker/group-registration-picker.component';
+import { PaymentTypePickerComponent } from './components/payment-type-picker/payment-type-picker.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +23,8 @@ import { GroupPickerComponent } from './components/group-picker/group-picker.com
     BranchPickerComponent,
     ChildPickerComponent,
     GroupPickerComponent,
+    GroupRegistrationPickerComponent,
+    PaymentTypePickerComponent,
   ],
   imports: [
     CommonModule,
@@ -39,6 +43,8 @@ import { GroupPickerComponent } from './components/group-picker/group-picker.com
     BranchPickerComponent,
     ChildPickerComponent,
     GroupPickerComponent,
+    PaymentTypePickerComponent,
+    GroupRegistrationPickerComponent,
   ],
 })
 export class SharedModule {}

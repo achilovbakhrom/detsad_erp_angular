@@ -58,16 +58,16 @@ export const deleteEmployeeContractByIdError = createAction(
 );
 
 export const fireEmployeeByContractId = createAction(
-  '[Employee Contract Api] Delete By Id',
+  '[Employee Contract Api] Fire By Id',
   props<{ id: number }>()
 );
 
 export const fireEmployeeByContractIdSuccess = createAction(
-  '[Employee Contract Api] Delete By Id Success'
+  '[Employee Contract Api] Fire By Id Success'
 );
 
 export const fireEmployeeByContractIdError = createAction(
-  '[Employee Contract Api] Delete By Id Error'
+  '[Employee Contract Api] Fire By Id Error'
 );
 
 export const hireEmployeeByContractId = createAction(

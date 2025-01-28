@@ -75,6 +75,20 @@ const routes: Routes = [
             (m) => m.EmployeeContractModule
           ),
       },
+      {
+        path: 'group-registration',
+        loadChildren: () =>
+          import('../group-registration/group-registration.module').then(
+            (m) => m.GroupRegistrationModule
+          ),
+      },
+      {
+        path: 'child-contract',
+        loadChildren: () =>
+          import('../child-contract/child-contract.module').then(
+            (m) => m.ChildContractModule
+          ),
+      },
     ],
   },
 ];

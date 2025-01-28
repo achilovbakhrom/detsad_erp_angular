@@ -52,11 +52,23 @@ import { getInitialEmployeeContractState } from './core/stores/employee-contract
 import { employeeReducer } from './core/stores/employee/employee.reducer';
 import { getInitialEmployeeState } from './core/stores/employee/employee.state';
 import { EmployeeEffects } from './core/stores/employee/employee.effects';
+import { GroupRegistrationComponent } from './group-registration/group-registration.component';
+import { ChildContractComponent } from './child-contract/child-contract.component';
+import { groupRegistrationReducer } from './core/stores/group-registration/group-registration.reducer';
+import { getInitialGroupRegistrationState } from './core/stores/group-registration/group-registration.state';
+import { GroupRegistrationEffects } from './core/stores/group-registration/group-registration.effects';
+import { childContractReducer } from './core/stores/child-contract/child-contract.reducer';
+import { getInitialChildContractState } from './core/stores/child-contract/child-contract.state';
+import { ChildContractEffects } from './core/stores/child-contract/child-contract.effects';
 
 registerLocaleData(en);
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+    GroupRegistrationComponent,
+    ChildContractComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -75,6 +87,8 @@ registerLocaleData(en);
         paymentType: paymentTypeReducer,
         employee: employeeReducer,
         employeeContract: employeeContractReducer,
+        groupRegistration: groupRegistrationReducer,
+        childContract: childContractReducer,
       },
       {
         metaReducers: [localStorageSyncReducer],
@@ -91,6 +105,8 @@ registerLocaleData(en);
           paymentType: getInitialPaymentTypeState(),
           employee: getInitialEmployeeState(),
           employeeContract: getInitialEmployeeContractState(),
+          groupRegistration: getInitialGroupRegistrationState(),
+          childContract: getInitialChildContractState(),
         },
       }
     ),
@@ -106,6 +122,8 @@ registerLocaleData(en);
       PaymentTypeEffects,
       EmployeeEffects,
       EmployeeContractEffects,
+      GroupRegistrationEffects,
+      ChildContractEffects,
     ]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
   ],

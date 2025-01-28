@@ -1,0 +1,45 @@
+<div #containerEl class="content">
+    <div nz-flex class="header" nzJustify="flex-end" nzAlign="center">
+        <button nz-button nzType="primary" [routerLink]="'/app/child-contract/create'">Добавить</button>
+    </div>
+    <nz-table
+        #table
+        *ngIf="(data$ | async) as data"
+        [nzData]="data || []"
+        [nzPageIndex]="(size$ | async) ?? 1"
+        (nzPageIndexChange)="setPage($event)"
+        [nzPageSize]="(size$ | async) ?? 20"
+        (nzPageSizeChange)="setSize($event)"        
+        [nzScroll]="{ y: tableHeight }"
+    >
+        <thead>
+          <tr>
+            <th>Дата</th>
+            <th>Клиент</th>
+            <th>Статус</th>
+            <th>Филиал</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of data">
+            <td>{{ row.date }}</td>
+            <td>{{ row.child.last_name + ' ' + row.child.first_name + ' ' + row.child.middle_name }}</td>
+            <td>{{ row.status }}</td>
+            <td>{{ row.branch.name }}</td>
+            <td>
+              <button
+                nz-button
+                nzType="text"
+                nz-popconfirm
+                nzPopconfirmTitle="Вы действительно хотите удалить Клиента"
+                (nzOnConfirm)="onDelete(row)"
+                [nzOkText]="'Да'"
+                [nzCancelText]="'Нет'"
+              >Удалить</button>
+              
+            </td>
+          </tr>
+        </tbody>
+    </nz-table>
+</div>
