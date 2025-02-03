@@ -14,12 +14,16 @@ import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
+import { NzListModule } from 'ng-zorro-antd/list';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 import { SharedModule } from '../shared/shared.module';
+import { GroupRegistrationFormComponentAddChildModal } from './group-registration-form/group-registration-form-add-child-modal.component';
 
 @NgModule({
   declarations: [
     GroupRegistrationFormComponent,
     GroupRegistrationListComponent,
+    GroupRegistrationFormComponentAddChildModal,
   ],
   imports: [
     CommonModule,
@@ -35,6 +39,8 @@ import { SharedModule } from '../shared/shared.module';
     NzPopconfirmModule,
     NzDatePickerModule,
     NzAutocompleteModule,
+    NzListModule,
+    NzModalModule,
     SharedModule,
   ],
 })

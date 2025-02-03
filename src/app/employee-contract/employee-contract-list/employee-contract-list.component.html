@@ -16,9 +16,11 @@
           <tr>
             <th>Дата</th>
             <th>ФИО</th>
-            <th>Должностьth>
+            <th>Должность</th>
             <th>Отдел</th>
             <th>Филиал</th>
+            <th>Зарплата</th>
+            <th>Статус</th>
             <th></th>
           </tr>
         </thead>
@@ -30,39 +32,43 @@
             <td>{{ row.department.title }}</td>
             <td>{{ row.branch.name }}</td>
             <td>{{ row.salary }}</td>
+            <td>{{ row.status }}</td>
             <td>
-              <button
-                *ngIf="row.status === 'created'"
-                nz-button
-                nzType="text"
-                nz-popconfirm
-                nzPopconfirmTitle="Вы действительно хотите удалить сотрудника?"
-                (nzOnConfirm)="onDelete(row)"
-                [nzOkText]="'Да'"
-                [nzCancelText]="'Нет'"
-              >Удалить</button>
-              <button
-                *ngIf="row.status === 'created'"
-                nz-button
-                nzType="text"
-                nzOkType
-                nz-popconfirm
-                nzPopconfirmTitle="Вы действительно хотите взять на работу?"
-                (nzOnConfirm)="onHire(row)"
-                [nzOkText]="'Да'"
-                [nzCancelText]="'Нет'"
-              >Взять</button>
-              <button
-                *ngIf="row.status === 'active'"
-                nz-button
-                nzType="text"
-                nzOkType
-                nz-popconfirm
-                nzPopconfirmTitle="Вы действительно хотите уволить на работу?"
-                (nzOnConfirm)="onFire(row)"
-                [nzOkText]="'Да'"
-                [nzCancelText]="'Нет'"
-              >Уволить</button>
+              
+              <nz-flex nz-row>
+                <button
+                  *ngIf="row.status === 'created'"
+                  nz-button
+                  nzType="text"
+                  nz-popconfirm
+                  nzPopconfirmTitle="Вы действительно хотите удалить сотрудника?"
+                  (nzOnConfirm)="onDelete(row)"
+                  [nzOkText]="'Да'"
+                  [nzCancelText]="'Нет'"
+                >Удалить</button>
+                <button
+                  *ngIf="row.status === 'created' || row.status === 'finished'"
+                  nz-button
+                  nzType="text"
+                  nzOkType
+                  nz-popconfirm
+                  nzPopconfirmTitle="Вы действительно хотите взять на работу?"
+                  (nzOnConfirm)="onHire(row)"
+                  [nzOkText]="'Да'"
+                  [nzCancelText]="'Нет'"
+                >Взять</button>
+                <button
+                  *ngIf="row.status === 'active'"
+                  nz-button
+                  nzType="text"
+                  nzOkType
+                  nz-popconfirm
+                  nzPopconfirmTitle="Вы действительно хотите уволить на работу?"
+                  (nzOnConfirm)="onFire(row)"
+                  [nzOkText]="'Да'"
+                  [nzCancelText]="'Нет'"
+                >Уволить</button>
+              </nz-flex>
             </td>
           </tr>
         </tbody>

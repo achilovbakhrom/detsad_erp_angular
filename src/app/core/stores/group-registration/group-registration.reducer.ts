@@ -1,6 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import { getInitialGroupRegistrationState } from './group-registration.state';
 import {
+  fetchChildContractSuccess,
   fetchGroupRegistrationListError,
   fetchGroupRegistrationListSuccess,
   saveGroupRegistration,
@@ -45,5 +46,9 @@ export const groupRegistrationReducer = createReducer(
   on(setSize, (state, { size }) => ({
     ...state,
     size: size,
+  })),
+  on(fetchChildContractSuccess, (state, { childContracts }) => ({
+    ...state,
+    childContracts: childContracts,
   }))
 );

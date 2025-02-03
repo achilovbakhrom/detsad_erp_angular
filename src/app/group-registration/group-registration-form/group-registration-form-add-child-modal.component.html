@@ -1,0 +1,11 @@
+<nz-modal
+    [(nzVisible)]="visible"
+    nzTitle="Выберите клиента"
+    (nzOnCancel)="handleCancel()"
+    (nzOnOk)="handleOk()"
+    [nzOkDisabled]="!selectedChild"
+>
+    <ng-container *nzModalContent>
+      <app-child-contract-picker [(selectedChild)]="selectedChild"></app-child-contract-picker>
+    </ng-container>
+  </nz-modal>

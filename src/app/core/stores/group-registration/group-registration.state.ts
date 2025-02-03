@@ -1,4 +1,5 @@
 import { BaseListState } from '../../../model/BaseListState';
+import { ChildContract } from '../../../model/ChildContract';
 import { GroupRegistration } from '../../../model/GroupRegistration';
 import { Nillable } from '../../../model/nullable';
 
@@ -6,6 +7,7 @@ export type GroupRegistrationState = BaseListState<GroupRegistration> & {
   groupRegistration: Nillable<GroupRegistration>;
   error: any;
   isActionGoing: boolean;
+  childContracts: ChildContract[];
 };
 
 export const initialState: GroupRegistrationState = {
@@ -17,6 +19,7 @@ export const initialState: GroupRegistrationState = {
   loading: false,
   error: null,
   isActionGoing: false,
+  childContracts: [],
 };
 
 export function getInitialGroupRegistrationState(): GroupRegistrationState {

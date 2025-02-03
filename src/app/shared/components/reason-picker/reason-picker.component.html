@@ -1,0 +1,28 @@
+<div style="display: flex; align-items: center;">
+    <input
+      nz-input
+      placeholder="Выберите сотрудника"
+      [(ngModel)]="inputValue"
+      [nzAutocomplete]="autocomplete"
+      (ngModelChange)="onChange($event)"
+      style="flex: 1;"
+    />
+    <i
+      nz-icon
+      nzType="close-circle"
+      nzTheme="outline"
+      *ngIf="inputValue"
+      (click)="clearSelection()"
+      style="margin-left: 8px; cursor: pointer; color: rgba(0, 0, 0, 0.45);"
+    ></i>
+    <nz-autocomplete #autocomplete>
+      <nz-auto-option
+        *ngFor="let item of options"
+        [nzValue]="item.id"
+        (click)="onPick(item)"
+      >
+        {{ getReasonName(item) }}
+      </nz-auto-option>
+    </nz-autocomplete>
+  </div>
+  

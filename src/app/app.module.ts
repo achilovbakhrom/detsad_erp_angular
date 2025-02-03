@@ -60,6 +60,13 @@ import { GroupRegistrationEffects } from './core/stores/group-registration/group
 import { childContractReducer } from './core/stores/child-contract/child-contract.reducer';
 import { getInitialChildContractState } from './core/stores/child-contract/child-contract.state';
 import { ChildContractEffects } from './core/stores/child-contract/child-contract.effects';
+import { SickLeaveComponent } from './sick-leave/sick-leave.component';
+import { SickLeaveReducer } from './core/stores/sick-leave/sick-leave.reducer';
+import { salaryReducer } from './core/stores/salary/salary.reducer';
+import { cashboxReducer } from './core/stores/cashbox/cashbox.reducer';
+import { getInitialSickLeaveState } from './core/stores/sick-leave/sick-leave.state';
+import { getInitialSalaryState } from './core/stores/salary/salary.state';
+import { getInitialCashboxState } from './core/stores/cashbox/cashbox.state';
 
 registerLocaleData(en);
 
@@ -68,6 +75,7 @@ registerLocaleData(en);
     AppComponent,
     GroupRegistrationComponent,
     ChildContractComponent,
+    SickLeaveComponent,
   ],
   imports: [
     BrowserModule,
@@ -89,6 +97,9 @@ registerLocaleData(en);
         employeeContract: employeeContractReducer,
         groupRegistration: groupRegistrationReducer,
         childContract: childContractReducer,
+        sickLeave: SickLeaveReducer,
+        salary: salaryReducer,
+        cashbox: cashboxReducer,
       },
       {
         metaReducers: [localStorageSyncReducer],
@@ -107,6 +118,9 @@ registerLocaleData(en);
           employeeContract: getInitialEmployeeContractState(),
           groupRegistration: getInitialGroupRegistrationState(),
           childContract: getInitialChildContractState(),
+          sickLeave: getInitialSickLeaveState(),
+          salary: getInitialSalaryState(),
+          cashbox: getInitialCashboxState(),
         },
       }
     ),

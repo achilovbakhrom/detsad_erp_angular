@@ -1,0 +1,4 @@
+<router-outlet *ngIf="currentCompany | async; else noSelectedCompany;"></router-outlet>
+<ng-template #noSelectedCompany>
+    <div>Выберите компанию</div>
+</ng-template>

@@ -16,6 +16,7 @@ import {
   setPage,
   setSize,
 } from '../../core/stores/group-registration/group-registration.actions';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-group-registration-list',
@@ -37,7 +38,7 @@ export class GroupRegistrationListComponent {
 
   private resizeObserver!: ResizeObserver;
 
-  constructor(private store: Store<AppState>) {
+  constructor(private store: Store<AppState>, private router: Router) {
     this.data$ = this.store.select(selectGroupRegistrationList);
     this.page$ = this.store.select(selectPage);
     this.size$ = this.store.select(selectSize);
@@ -76,5 +77,9 @@ export class GroupRegistrationListComponent {
     if (this.resizeObserver) {
       this.resizeObserver.disconnect();
     }
+  }
+
+  onEdit(arg: GroupRegistration) {
+    this.router.navigate([`/app/group-registration/${arg.id}/edit`]);
   }
 }

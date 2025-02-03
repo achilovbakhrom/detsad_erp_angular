@@ -56,4 +56,14 @@ export class GroupRegistrationService {
       groupRegistration
     );
   }
+
+  updateGroupRegistration(
+    id: number,
+    groupRegistration: GroupRegistrationInput
+  ): Observable<GroupRegistration> {
+    return this.httpClient.put<GroupRegistration>(
+      `group-registration/${id}/update/`,
+      groupRegistration
+    );
+  }
 }

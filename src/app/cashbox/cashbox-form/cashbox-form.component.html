@@ -1,0 +1,76 @@
+<form [formGroup]="cashboxForm" (ngSubmit)="onSubmit()" nz-form nzLayout="vertical">
+    <!-- Date -->
+    <nz-form-item>
+        <nz-form-label nzFor="date">Дата</nz-form-label>
+        <nz-form-control>
+            <nz-date-picker
+                id="date"
+                formControlName="date"
+                nzPlaceHolder="Вырерите дату"
+                nzFormat="yyyy-MM-dd"
+            ></nz-date-picker>
+        </nz-form-control>
+    </nz-form-item>
+
+    <!-- Payment type -->
+    <nz-form-item>
+        <nz-form-label nzFor="payment_type">Способ оплаты</nz-form-label>
+        <nz-form-control>
+            <nz-radio-group id="payment_type" formControlName="payment_type">
+                <label nz-radio nzValue="income">Приход</label>
+                <label nz-radio nzValue="expense">Расход</label>
+              </nz-radio-group>
+        </nz-form-control>
+     </nz-form-item>
+
+     <!-- Amount -->
+     <nz-form-item>
+        <nz-form-label nzFor="amount">Сумма</nz-form-label>
+        <nz-form-control>
+            <input nz-input id="amount" formControlName="amount" placeholder="Введите Сумму платежа" />
+        </nz-form-control>
+    </nz-form-item>
+
+    <!-- Reason -->
+    <nz-form-item>
+        <nz-form-label nzFor="reason">Причина</nz-form-label>
+        <nz-form-control>
+            <app-reason-picker id="reason" formControlName="reason"></app-reason-picker>
+        </nz-form-control>
+     </nz-form-item>
+
+    <!-- Child -->
+     <nz-form-item>
+        <nz-form-label nzFor="child">Клиент</nz-form-label>
+        <nz-form-control>
+            <app-child-picker id="child" formControlName="child"></app-child-picker>
+        </nz-form-control>
+     </nz-form-item>
+
+    <!-- Description -->
+    <nz-form-item>
+        <nz-form-label nzFor="description">Описание</nz-form-label>
+        <nz-form-control>
+            <textarea
+                nz-input
+                id="description"
+                formControlName="description"
+                placeholder="Введите описание"
+                rows="4"
+            ></textarea>
+        </nz-form-control>
+    </nz-form-item>
+
+     <!-- Submit Button -->
+     <nz-form-item>
+        <nz-form-control>
+            <button
+                nz-button
+                nzType="primary"
+                [disabled]="!cashboxForm.valid"
+                >
+                Сохранить
+            </button>
+        </nz-form-control>
+     </nz-form-item>
+</form>

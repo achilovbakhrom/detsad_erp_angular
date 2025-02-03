@@ -19,11 +19,17 @@ import {
   saveGroupRegistration,
   saveGroupRegistrationError,
   saveGroupRegistrationSuccess,
+  updateGroupRegistration,
+  updateGroupRegistrationError,
+  updateGroupRegistrationSuccess,
   changeStatusById,
   changeStatusByIdError,
   changeStatusByIdSuccess,
   setPage,
   setSize,
+  fetchChildContract,
+  fetchChildContractSuccess,
+  fetchChildContractError,
 } from './group-registration.actions';
 
 import { tap } from 'ramda';
@@ -33,12 +39,14 @@ import { AppState } from '../types';
 import { selectPage, selectSize } from './group-registration.selectors';
 import { selectCompany } from '../common/common.selectors';
 import { GroupRegistrationService } from '../../../group-registration/group-registration.service';
+import { ChildContractService } from '../../../child-contract/child-contract.service';
 
 @Injectable()
 export class GroupRegistrationEffects {
   constructor(
     private actions$: Actions,
     private groupRegistrationService: GroupRegistrationService,
+    private childContractService: ChildContractService,
     private notificationService: NzNotificationService,
     private router: Router,
     private store: Store<AppState>
@@ -62,6 +70,31 @@ export class GroupRegistrationEffects {
 
             catchError((error) =>
               of(saveGroupRegistrationError({ error })).pipe(
+                tap(() => this.showErrorMessage(error))
+              )
+            )
+          )
+      )
+    )
+  );
+
+  updateGroupRegistrationContract$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateGroupRegistration),
+      withLatestFrom(this.store.select(selectCompany)),
+      mergeMap(([action, company]) =>
+        this.groupRegistrationService
+          .updateGroupRegistration(action.id, action.groupRegistration)
+          .pipe(
+            map((groupRegistration) => {
+              this.showSuccessMessage();
+              this.goToGroupRegistrationListPage();
+              return updateGroupRegistrationSuccess({
+                groupRegistration,
+              });
+            }),
+            catchError((error) =>
+              of(updateGroupRegistrationError({ error })).pipe(
                 tap(() => this.showErrorMessage(error))
               )
             )
@@ -143,6 +176,28 @@ export class GroupRegistrationEffects {
                 tap(() => this.showErrorMessage(error)),
                 map(() => changeStatusByIdError())
               )
+            )
+          )
+      )
+    )
+  );
+
+  fetchChildContract$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fetchChildContract),
+      mergeMap((action) =>
+        this.childContractService
+          .fetchChildContractList({
+            page: 1,
+            size: 100000,
+            group_registration_id: action.id,
+          })
+          .pipe(
+            map((result) =>
+              fetchChildContractSuccess({ childContracts: result.results })
+            ),
+            catchError((err) =>
+              of().pipe(map(() => fetchChildContractError({ error: err })))
             )
           )
       )

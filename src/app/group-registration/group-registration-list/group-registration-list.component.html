@@ -28,15 +28,26 @@
             <td>{{ row.status }}</td>
             <td>{{ row.branch.name }}</td>
             <td>
-              <button
-                nz-button
-                nzType="text"
-                nz-popconfirm
-                nzPopconfirmTitle="Вы действительно хотите удалить Группу?"
-                (nzOnConfirm)="onDelete(row)"
-                [nzOkText]="'Да'"
-                [nzCancelText]="'Нет'"
-              >Удалить</button>
+              <nz-flex nz-row nzGap="10">
+                <button
+                  nz-button
+                  nzType="text"
+                  nz-popconfirm
+                  nzPopconfirmTitle="Вы действительно хотите удалить Группу?"
+                  (nzOnConfirm)="onDelete(row)"
+                  [nzOkText]="'Да'"
+                  [nzCancelText]="'Нет'"
+                >Удалить</button>
+                <button
+                  nz-button
+                  nzType="text"
+                  (click)="onEdit(row)"
+                >
+                  Именить
+                </button>
+
+              </nz-flex>
+              
               
             </td>
           </tr>

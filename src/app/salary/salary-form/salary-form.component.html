@@ -1,0 +1,62 @@
+<form [formGroup]="salaryForm" (ngSubmit)="onSubmit()" nz-form nzLayout="vertical">
+    <!-- Date -->
+    <nz-form-item>
+        <nz-form-label nzFor="date">Дата</nz-form-label>
+        <nz-form-control>
+            <nz-date-picker
+                id="date"
+                formControlName="date"
+                nzPlaceHolder="Вырерите дату"
+                nzFormat="yyyy-MM-dd"
+            ></nz-date-picker>
+        </nz-form-control>
+    </nz-form-item>
+
+    <!-- Employee -->
+     <nz-form-item>
+        <nz-form-label nzFor="employee">Сотрудник</nz-form-label>
+        <nz-form-control>
+            <app-employee-contract-picker
+                id="employee"
+                formControlName="employee"></app-employee-contract-picker>
+        </nz-form-control>
+     </nz-form-item>
+
+    <!-- Description -->
+    <nz-form-item>
+        <nz-form-label [nzFor]="'description'">Описание (Необязательно)</nz-form-label>
+        <nz-form-control [nzErrorTip]="'Description must be less than 500 characters.'">
+          <textarea
+            nz-input
+            id="description"
+            formControlName="description"
+            placeholder="Введите описание"
+            rows="4"
+          ></textarea>
+        </nz-form-control>
+      </nz-form-item>
+    
+
+    <!-- Submit Button -->
+    <nz-form-item ngClass="buttons-panel">
+        <nz-form-control>
+            <nz-flex nzGap="10px">
+                <button
+                    nz-button
+                    nzDanger
+                    [routerLink]="'../'"
+                >
+                    Отмена
+                </button>
+                <button
+                    nz-button
+                    nzType="primary"
+                    [disabled]="!salaryForm.valid"
+                    >
+                    Сохранить
+                </button>
+            </nz-flex>
+            
+        </nz-form-control>
+    </nz-form-item>
+</form>

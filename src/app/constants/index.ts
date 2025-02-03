@@ -13,3 +13,6 @@ export const DEPARTMENT_STATE = 'department';
 export const PAYMENT_TYPE_STATE = 'paymentType';
 export const EMPLOYEE_STATE = 'employee';
 export const EMPLOYEE_CONTRACT_STATE = 'employeeContract';
+export const CASHBOX_STATE = 'cashbox';
+export const SICK_LEAVE_STATE = 'sickLeave';
+export const SALARY_STATE = 'salary';

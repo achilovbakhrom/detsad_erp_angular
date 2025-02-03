@@ -89,6 +89,18 @@ const routes: Routes = [
             (m) => m.ChildContractModule
           ),
       },
+      {
+        path: 'salary',
+        loadChildren: () =>
+          import('../salary/salary.module').then((m) => m.SalaryModule),
+      },
+      {
+        path: 'sick-leave',
+        loadChildren: () =>
+          import('../sick-leave/sick-leave.module').then(
+            (m) => m.SickLeaveModule
+          ),
+      },
     ],
   },
 ];

@@ -16,6 +16,10 @@ export const selectGroupRegistration = selectValueFromState(
   (state: GroupRegistrationState) => state.groupRegistration
 );
 
+export const selectGroupChildContracts = selectValueFromState(
+  (state: GroupRegistrationState) => state.childContracts
+);
+
 export const selectLoading = selectValueFromState(
   (state: GroupRegistrationState) => state.loading
 );

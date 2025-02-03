@@ -83,7 +83,6 @@ const handle401Error = (
         })
         .pipe(
           switchMap((response) => {
-            console.log('Refresh token succeeded:', response); // Debugging
             store.dispatch(
               refreshTokenSuccess({
                 accessToken: response.access,
@@ -103,6 +102,11 @@ const handle401Error = (
             return throwError(() => refreshError);
           })
         );
+    }),
+    catchError((err) => {
+      console.log('Refresh token failed, redirecting to login 2'); // Debugging
+      router.navigate(['/auth/login']);
+      return throwError(() => err);
     })
   );
 };

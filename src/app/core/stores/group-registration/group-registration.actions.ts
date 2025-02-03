@@ -5,10 +5,26 @@ import {
   GroupRegistrationInput,
   GroupRegistrationStatus,
 } from '../../../model/GroupRegistration';
+import { ChildContract } from '../../../model/ChildContract';
 
 export const saveGroupRegistration = createAction(
   '[Group Registration Form] Save Group Registration',
   props<{ groupRegistration: GroupRegistrationInput }>()
+);
+
+export const updateGroupRegistration = createAction(
+  '[Group Registration Form] Update Group Registration',
+  props<{ id: number; groupRegistration: GroupRegistrationInput }>()
+);
+
+export const updateGroupRegistrationSuccess = createAction(
+  '[Group Registration Form] Update Group Registration Success',
+  props<{ groupRegistration: GroupRegistration }>()
+);
+
+export const updateGroupRegistrationError = createAction(
+  '[Group Registration Form] Update Group Registration Error',
+  props<{ error: any }>()
 );
 
 export const saveGroupRegistrationSuccess = createAction(
@@ -69,4 +85,19 @@ export const changeStatusByIdSuccess = createAction(
 
 export const changeStatusByIdError = createAction(
   '[Group Registration Api] Change Status By Id Error'
+);
+
+export const fetchChildContract = createAction(
+  '[Child Contract Api] Fetch Child Contracts By Group Registraion Id',
+  props<{ id: number }>()
+);
+
+export const fetchChildContractSuccess = createAction(
+  '[Child Contract Api] Fetch Child Contracts By Group Registraion Id Success',
+  props<{ childContracts: ChildContract[] }>()
+);
+
+export const fetchChildContractError = createAction(
+  '[Child Contract Api] Fetch Child Contracts By Group Registraion Id Error',
+  props<{ error: any }>()
 );
