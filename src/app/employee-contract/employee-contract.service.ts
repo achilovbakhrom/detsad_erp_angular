@@ -19,7 +19,7 @@ export class EmployeeContractService {
     contract: EmployeeContractInput
   ): Observable<EmployeeContract> {
     return this.httpClient.post<EmployeeContract>(
-      'employee_contracts/create/',
+      'employee-contracts/create/',
       contract
     );
   }
@@ -28,7 +28,7 @@ export class EmployeeContractService {
     filter: BaseListFilter
   ): Observable<BaseListResponse<EmployeeContract>> {
     return this.httpClient.get<BaseListResponse<EmployeeContract>>(
-      'employee_contracts/list/',
+      'employee-contracts/list/',
       {
         params: removeNullAndUndefined({
           page: filter.page,
@@ -41,18 +41,18 @@ export class EmployeeContractService {
   }
 
   fetchEmployeeContractById(id: number): Observable<EmployeeContract> {
-    return this.httpClient.get<EmployeeContract>(`employee_contracts/${id}/`);
+    return this.httpClient.get<EmployeeContract>(`employee-contracts/${id}/`);
   }
 
   deleteEmployeeContractById(id: number): Observable<void> {
-    return this.httpClient.delete<void>(`employee_contracts/${id}/delete/`);
+    return this.httpClient.delete<void>(`employee-contracts/${id}/delete/`);
   }
 
   fireEmployeeContractById(id: number): Observable<void> {
-    return this.httpClient.delete<void>(`employee_contracts/${id}/fire/`);
+    return this.httpClient.delete<void>(`employee-contracts/${id}/fire/`);
   }
 
   hireEmployeeContractById(id: number): Observable<void> {
-    return this.httpClient.put<void>(`employee_contracts/${id}/hire/`, {});
+    return this.httpClient.put<void>(`employee-contracts/${id}/hire/`, {});
   }
 }
