@@ -14,6 +14,7 @@ import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
+import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { SharedModule } from '../shared/shared.module';
 import { CashboxRoutingModule } from './cashbox-routing.module';
 
@@ -33,6 +34,7 @@ import { CashboxRoutingModule } from './cashbox-routing.module';
     NzPopconfirmModule,
     NzDatePickerModule,
     NzAutocompleteModule,
+    NzRadioModule,
     SharedModule,
   ],
 })

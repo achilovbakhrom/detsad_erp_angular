@@ -101,6 +101,11 @@ const routes: Routes = [
             (m) => m.SickLeaveModule
           ),
       },
+      {
+        path: 'cashbox',
+        loadChildren: () =>
+          import('../cashbox/cashbox.module').then((m) => m.CashboxModule),
+      },
     ],
   },
 ];

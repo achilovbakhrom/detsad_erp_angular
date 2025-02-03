@@ -52,6 +52,8 @@ import { ReasonPickerComponent } from './components/reason-picker/reason-picker.
     PaymentTypePickerComponent,
     GroupRegistrationPickerComponent,
     ChildContractPickerComponent,
+    EmployeeContractPickerComponent,
+    ReasonPickerComponent,
   ],
 })
 export class SharedModule {}

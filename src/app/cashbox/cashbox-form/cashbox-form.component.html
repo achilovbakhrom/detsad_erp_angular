@@ -12,11 +12,11 @@
         </nz-form-control>
     </nz-form-item>
 
-    <!-- Payment type -->
+    <!-- Transaction Type -->
     <nz-form-item>
-        <nz-form-label nzFor="payment_type">Способ оплаты</nz-form-label>
+        <nz-form-label nzFor="transaction_type">Способ оплаты</nz-form-label>
         <nz-form-control>
-            <nz-radio-group id="payment_type" formControlName="payment_type">
+            <nz-radio-group id="transaction_type" formControlName="transaction_type">
                 <label nz-radio nzValue="income">Приход</label>
                 <label nz-radio nzValue="expense">Расход</label>
               </nz-radio-group>
@@ -28,6 +28,14 @@
         <nz-form-label nzFor="amount">Сумма</nz-form-label>
         <nz-form-control>
             <input nz-input id="amount" formControlName="amount" placeholder="Введите Сумму платежа" />
+        </nz-form-control>
+    </nz-form-item>
+
+    <!-- Payment Type -->
+    <nz-form-item>
+        <nz-form-label nzFor="payment_type">Способ оплаты</nz-form-label>
+        <nz-form-control>
+            <app-payment-type-picker id="payment_type" formControlName="payment_type"></app-payment-type-picker>
         </nz-form-control>
     </nz-form-item>
 

@@ -28,9 +28,9 @@
           <tr *ngFor="let row of data">
             <td>{{ row.date }}</td>
             <td>{{ row.transaction_type}}</td>
-            <td>{{ row.payment_type }}</td>
+            <td>{{ row.payment_type.name }}</td>
             <td>{{ row.amount }}</td>
-            <td>{{ row.reason }}</td>
+            <td>{{ row.reason.title }}</td>
             
             <td>{{ row.child?.child?.last_name + ' ' + row.child?.child?.first_name + ' ' + row.child?.child?.middle_name }}</td>
             <td>{{ row.description }}</td>

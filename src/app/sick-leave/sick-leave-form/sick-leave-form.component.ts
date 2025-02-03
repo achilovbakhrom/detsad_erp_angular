@@ -11,6 +11,7 @@ import { saveSickLeave } from '../../core/stores/sick-leave/sick-leave.actions';
 
   templateUrl: './sick-leave-form.component.html',
   styleUrl: './sick-leave-form.component.scss',
+  providers: [DatePipe],
 })
 export class SickLeaveFormComponent {
   sickLeaveForm!: FormGroup;

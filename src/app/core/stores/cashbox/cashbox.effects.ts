@@ -33,7 +33,7 @@ import { SalaryService } from '../../../salary/salary.service';
 import { CashboxService } from '../../../cashbox/cashbox.service';
 
 @Injectable()
-export class GroupRegistrationEffects {
+export class CashboxEffects {
   constructor(
     private actions$: Actions,
     private cashboxService: CashboxService,

@@ -11,6 +11,7 @@ import { saveCashbox } from '../../core/stores/cashbox/cashbox.actions';
 
   templateUrl: './cashbox-form.component.html',
   styleUrl: './cashbox-form.component.scss',
+  providers: [DatePipe],
 })
 export class CashboxFormComponent {
   cashboxForm!: FormGroup;
@@ -25,7 +26,7 @@ export class CashboxFormComponent {
     this.cashboxForm = this.fb.group({
       date: ['', [Validators.required]],
       amount: [0, [Validators.required]],
-      payment_type: [null, [Validators.required]],
+      payment_type: [false, [Validators.required]],
       reason: [null, [Validators.required]],
       description: ['', [Validators.required]],
       transaction_type: [null, [Validators.required]],

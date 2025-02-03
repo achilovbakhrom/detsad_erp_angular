@@ -67,6 +67,9 @@ import { cashboxReducer } from './core/stores/cashbox/cashbox.reducer';
 import { getInitialSickLeaveState } from './core/stores/sick-leave/sick-leave.state';
 import { getInitialSalaryState } from './core/stores/salary/salary.state';
 import { getInitialCashboxState } from './core/stores/cashbox/cashbox.state';
+import { SalaryEffects } from './core/stores/salary/salary.effects';
+import { SickLeaveEffects } from './core/stores/sick-leave/sick-leave.effects';
+import { CashboxEffects } from './core/stores/cashbox/cashbox.effects';
 
 registerLocaleData(en);
 
@@ -138,6 +141,9 @@ registerLocaleData(en);
       EmployeeContractEffects,
       GroupRegistrationEffects,
       ChildContractEffects,
+      SalaryEffects,
+      SickLeaveEffects,
+      CashboxEffects,
     ]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
   ],
