@@ -80,16 +80,14 @@ export class ChildContractEffects {
       ),
 
       switchMap(([_, page, size, company]) =>
-        this.childContractService
-          .fetchChildContractList({ page, size, company: company?.id })
-          .pipe(
-            map((response) => fetchChildContractListSuccess(response)),
-            catchError((error) =>
-              of(fetchChildContractListError({ error })).pipe(
-                tap(() => this.showErrorMessage(error))
-              )
+        this.childContractService.fetchChildContractList({ page, size }).pipe(
+          map((response) => fetchChildContractListSuccess(response)),
+          catchError((error) =>
+            of(fetchChildContractListError({ error })).pipe(
+              tap(() => this.showErrorMessage(error))
             )
           )
+        )
       )
     )
   );

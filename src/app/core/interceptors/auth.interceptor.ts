@@ -16,11 +16,14 @@ import {
   take,
   throwError,
   of,
+  delay,
+  withLatestFrom,
 } from 'rxjs';
 import { toBearer } from '../../shared/utils/helpers';
 import { Store } from '@ngrx/store';
 import { AppState } from '../stores/types';
 import { refreshTokenSuccess } from '../stores/auth/auth.actions';
+import { selectCompany } from '../stores/common/common.selectors';
 
 export const tokenInterceptor: HttpInterceptorFn = (
   req: HttpRequest<unknown>,
@@ -32,10 +35,11 @@ export const tokenInterceptor: HttpInterceptorFn = (
 
   return store.select('auth').pipe(
     take(1),
-    exhaustMap((authState) => {
+    withLatestFrom(store.select(selectCompany)),
+    exhaustMap(([authState, currentCompany]) => {
       let clonedRequest = req;
-
-      if (authState && authState.accessToken) {
+      console.log('authState?.accessToken', authState?.accessToken);
+      if (authState?.accessToken != null) {
         clonedRequest = req.clone({
           setHeaders: {
             Authorization: toBearer(authState.accessToken),
@@ -43,16 +47,22 @@ export const tokenInterceptor: HttpInterceptorFn = (
         });
       }
 
+      if (currentCompany != null) {
+        clonedRequest = clonedRequest.clone({
+          setHeaders: {
+            'X-TENANT-ID': String(currentCompany.id),
+          },
+        });
+      }
+
       return next(clonedRequest).pipe(
         catchError((error: any) => {
-          console.log(
-            'HTTP Error occurred:',
-            error.message,
-            error instanceof HttpErrorResponse
-          ); // Debugging
           if (error.message?.includes('401')) {
-            console.log('Detected 401, attempting refresh token'); // Debugging
-            return handle401Error(req, next, http, store, router);
+            if (error.message.includes('/login/refresh')) {
+              router.navigate(['/auth/login']);
+            } else {
+              return handle401Error(req, next, http, store, router);
+            }
           }
           return throwError(() => error); // Throw the error to propagate it
         })
@@ -69,10 +79,10 @@ const handle401Error = (
   router: Router
 ): Observable<HttpEvent<unknown>> => {
   return store.select('auth').pipe(
+    delay(3000),
     take(1),
     switchMap((authState) => {
       if (!authState.refreshToken) {
-        console.log('No refresh token, redirecting to login'); // Debugging
         router.navigate(['/auth/login']);
         return throwError(() => new Error('No refresh token available'));
       }
@@ -97,14 +107,12 @@ const handle401Error = (
             return next(clonedRequest);
           }),
           catchError((refreshError) => {
-            console.log('Refresh token failed, redirecting to login'); // Debugging
             router.navigate(['/auth/login']);
             return throwError(() => refreshError);
           })
         );
     }),
     catchError((err) => {
-      console.log('Refresh token failed, redirecting to login 2'); // Debugging
       router.navigate(['/auth/login']);
       return throwError(() => err);
     })

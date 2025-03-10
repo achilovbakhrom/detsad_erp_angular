@@ -1,0 +1,10 @@
+.content {
+    height: 100%;
+    overflow: hidden;
+}
+
+.table {
+    margin-top: 10px;
+    height: calc(100% - 130px);
+    overflow: auto;
+}

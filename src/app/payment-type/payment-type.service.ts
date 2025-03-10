@@ -32,7 +32,6 @@ export class PaymentTypeService {
           page: filter.page,
           page_size: filter.size,
           search: filter.search,
-          company_id: filter.company,
         }) as any,
       }
     );

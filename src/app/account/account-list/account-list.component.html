@@ -1,0 +1,38 @@
+<div #containerEl class="content">
+    <div nz-flex class="header" nzJustify="flex-end" nzAlign="center">
+        <button nz-button nzType="primary" [routerLink]="'/app/account/create'">Добавить</button>
+    </div>
+    <nz-table
+        #table
+        *ngIf="(data$ | async) as data"
+        [nzData]="data || []"
+        [nzPageIndex]="(size$ | async) ?? 1"
+        (nzPageIndexChange)="setPage($event)"
+        [nzPageSize]="(size$ | async) ?? 20"
+        (nzPageSizeChange)="setSize($event)"        
+        [nzScroll]="{ y: tableHeight }"
+    >
+        <thead>
+          <tr>
+            <th>Название</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of data">
+            <td>{{ row.name }}</td>
+            <td>
+              <button
+                nz-button
+                nzType="text"
+                nz-popconfirm
+                nzPopconfirmTitle="Вы действительно хотите удалить счет?"
+                (nzOnConfirm)="onDelete(row)"
+                [nzOkText]="'Да'"
+                [nzCancelText]="'Нет'"
+              >Удалить</button>
+            </td>
+          </tr>
+        </tbody>
+    </nz-table>
+</div>

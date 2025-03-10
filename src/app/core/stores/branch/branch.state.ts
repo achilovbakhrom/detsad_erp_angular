@@ -7,6 +7,11 @@ export type BranchState = BaseListState<Branch> & {
   error: any;
 };
 
+type StateKey = keyof BranchState;
+
+const WHITELIST: StateKey[] = [];
+const BLACKLIST: StateKey[] = [];
+
 export const initialState: BranchState = {
   data: null,
   total: null,

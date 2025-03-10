@@ -22,6 +22,34 @@
         </nz-form-control>
      </nz-form-item>
 
+    <!-- Payment Type -->
+    <nz-form-item>
+        <nz-form-label nzFor="payment_type">Способ оплаты</nz-form-label>
+        <nz-form-control>
+            <app-payment-type-picker
+                id="payment_type"
+                formControlName="payment_type"></app-payment-type-picker>
+        </nz-form-control>
+    </nz-form-item>
+
+    <!-- Account -->
+    <nz-form-item>
+        <nz-form-label nzFor="account">Счет</nz-form-label>
+        <nz-form-control>
+            <app-account-picker
+                id="account"
+                formControlName="account"></app-account-picker>
+        </nz-form-control>
+    </nz-form-item>
+
+    <!-- Amount -->
+    <nz-form-item>
+        <nz-form-label nzFor="account">Сумма</nz-form-label>
+        <nz-form-control>
+            <input nz-input id="account" placeholder="Введите сумму" formControlName="amount" />
+        </nz-form-control>
+    </nz-form-item>
+
     <!-- Description -->
     <nz-form-item>
         <nz-form-label [nzFor]="'description'">Описание (Необязательно)</nz-form-label>

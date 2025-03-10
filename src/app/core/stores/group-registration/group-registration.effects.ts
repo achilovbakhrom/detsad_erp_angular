@@ -112,9 +112,9 @@ export class GroupRegistrationEffects {
         this.store.select(selectCompany)
       ),
 
-      switchMap(([_, page, size, company]) =>
+      switchMap(([_, page, size]) =>
         this.groupRegistrationService
-          .fetchGroupRegistrationList({ page, size, company: company?.id })
+          .fetchGroupRegistrationList({ page, size })
           .pipe(
             map((response) => fetchGroupRegistrationListSuccess(response)),
             catchError((error) =>

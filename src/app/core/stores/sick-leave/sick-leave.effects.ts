@@ -77,12 +77,11 @@ export class SickLeaveEffects {
         this.store.select(selectCompany)
       ),
 
-      switchMap(([_, page, size, company]) =>
+      switchMap(([_, page, size]) =>
         this.sickLeaveService
           .fetchSickLeaveList({
             page,
             size,
-            company: company?.id,
           })
           .pipe(
             map((response) => fetchSickLeaveSuccess(response)),

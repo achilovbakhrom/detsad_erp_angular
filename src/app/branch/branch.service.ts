@@ -15,7 +15,7 @@ export class BranchService {
   createBranch(
     branch: Omit<Branch, 'company'> & { company?: number }
   ): Observable<Branch> {
-    return this.httpClient.post<Branch>('branch/', branch);
+    return this.httpClient.post<Branch>('branch/create/', branch);
   }
 
   fetchBranchList(
@@ -26,7 +26,6 @@ export class BranchService {
         page: filter.page,
         page_size: filter.size,
         search: filter.search,
-        company_id: filter.company,
       }) as any,
     });
   }

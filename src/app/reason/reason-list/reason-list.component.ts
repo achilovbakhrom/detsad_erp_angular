@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { Observable } from 'rxjs';
+import { distinctUntilChanged, Observable, Subject, takeUntil } from 'rxjs';
 import { Nillable } from '../../model/nullable';
 import { Reason } from '../../model/Reason';
 import { AppState } from '../../core/stores/types';
@@ -16,6 +16,7 @@ import {
   setPage,
   setSize,
 } from '../../core/stores/reason/reason.actions';
+import { selectCompany } from '../../core/stores/common/common.selectors';
 
 @Component({
   selector: 'app-reason-list',
@@ -25,6 +26,7 @@ import {
   styleUrl: './reason-list.component.scss',
 })
 export class ReasonListComponent {
+  private destroy$ = new Subject<void>();
   data$: Observable<Nillable<Reason[]>>;
   page$: Observable<Nillable<number>>;
   size$: Observable<Nillable<number>>;
@@ -45,7 +47,14 @@ export class ReasonListComponent {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(fetchReasonList());
+    this.store
+      .select(selectCompany)
+      .pipe(distinctUntilChanged(), takeUntil(this.destroy$))
+      .subscribe((company) => {
+        if (company) {
+          this.store.dispatch(fetchReasonList());
+        }
+      });
   }
 
   setPage(arg: number) {
@@ -76,5 +85,7 @@ export class ReasonListComponent {
     if (this.resizeObserver) {
       this.resizeObserver.disconnect();
     }
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

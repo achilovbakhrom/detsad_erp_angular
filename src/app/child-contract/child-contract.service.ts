@@ -29,7 +29,6 @@ export class ChildContractService {
           page: filter.page,
           page_size: filter.size,
           search: filter.search,
-          company_id: filter.company,
         }) as any,
       }
     );
@@ -48,7 +47,6 @@ export class ChildContractService {
           page: filter.page,
           page_size: filter.size,
           search: filter.search,
-          company_id: filter.company,
           group_registration_id: filter.group_registration_id,
         }) as any,
       }
@@ -65,7 +63,7 @@ export class ChildContractService {
   }
 
   deleteChildContractById(id: number): Observable<void> {
-    return this.httpClient.delete<void>(`child-contract/${id}/delete/`);
+    return this.httpClient.delete<void>(`child-contract/${id}/`);
   }
 
   createChildContract(

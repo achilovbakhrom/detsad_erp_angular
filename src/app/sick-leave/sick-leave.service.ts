@@ -20,13 +20,12 @@ export class SickLeaveService {
         page: filter.page,
         page_size: filter.size,
         search: filter.search,
-        company_id: filter.company,
       }) as any,
     });
   }
 
   deleteSickLeaveById(id: number): Observable<void> {
-    return this.httpClient.delete<void>(`sick-leave/${id}/delete/`);
+    return this.httpClient.delete<void>(`sick-leave/${id}/`);
   }
 
   createSickLeave(sicLeave: SickLeaveInput): Observable<SickLeave> {

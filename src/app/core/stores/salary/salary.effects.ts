@@ -73,21 +73,18 @@ export class SalaryEffects {
       ofType(fetchSalaryList),
       withLatestFrom(
         this.store.select(selectPage),
-        this.store.select(selectSize),
-        this.store.select(selectCompany)
+        this.store.select(selectSize)
       ),
 
-      switchMap(([_, page, size, company]) =>
-        this.salaryService
-          .fetchSalaryList({ page, size, company: company?.id })
-          .pipe(
-            map((response) => fetchSalarySuccess(response)),
-            catchError((error) =>
-              of(fetchSalaryError({ error })).pipe(
-                tap(() => this.showErrorMessage(error))
-              )
+      switchMap(([_, page, size]) =>
+        this.salaryService.fetchSalaryList({ page, size }).pipe(
+          map((response) => fetchSalarySuccess(response)),
+          catchError((error) =>
+            of(fetchSalaryError({ error })).pipe(
+              tap(() => this.showErrorMessage(error))
             )
           )
+        )
       )
     )
   );

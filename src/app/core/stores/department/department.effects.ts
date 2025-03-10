@@ -72,17 +72,15 @@ export class DepartmentEffects {
         this.store.select(selectCompany)
       ),
 
-      switchMap(([_, page, size, company]) =>
-        this.departmentService
-          .fetchDepartmentList({ page, size, company: company?.id })
-          .pipe(
-            map((response) => fetchDepartmentListSuccess(response)),
-            catchError((error) =>
-              of(fetchDepartmentListError({ error })).pipe(
-                tap(() => this.showErrorMessage(error))
-              )
+      switchMap(([_, page, size]) =>
+        this.departmentService.fetchDepartmentList({ page, size }).pipe(
+          map((response) => fetchDepartmentListSuccess(response)),
+          catchError((error) =>
+            of(fetchDepartmentListError({ error })).pipe(
+              tap(() => this.showErrorMessage(error))
             )
           )
+        )
       )
     )
   );

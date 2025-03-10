@@ -16,7 +16,7 @@ export class EmployeeService {
   createEmployee(
     employee: TransformCompanyToBeSaved<Employee>
   ): Observable<Employee> {
-    return this.httpClient.post<Employee>('employee/', employee);
+    return this.httpClient.post<Employee>('employee/create/', employee);
   }
 
   fetchEmployeeList(
@@ -27,7 +27,6 @@ export class EmployeeService {
         page: filter.page,
         page_size: filter.size,
         search: filter.search,
-        company_id: filter.company,
       }) as any,
     });
   }

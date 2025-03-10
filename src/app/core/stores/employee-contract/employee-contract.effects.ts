@@ -82,9 +82,9 @@ export class EmployeeContractEffects {
         this.store.select(selectCompany)
       ),
 
-      switchMap(([_, page, size, company]) =>
+      switchMap(([_, page, size]) =>
         this.employeeContractService
-          .fetchEmployeeContractList({ page, size, company: company?.id })
+          .fetchEmployeeContractList({ page, size })
           .pipe(
             map((response) => fetchEmployeeContractListSuccess(response)),
             catchError((error) =>

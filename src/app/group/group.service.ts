@@ -14,7 +14,7 @@ export class GroupService {
   constructor(private httpClient: HttpClient) {}
 
   createGroup(group: TransformCompanyToBeSaved<Group>): Observable<Group> {
-    return this.httpClient.post<Group>('group/', group);
+    return this.httpClient.post<Group>('group/create/', group);
   }
 
   fetchGroupList(filter: BaseListFilter): Observable<BaseListResponse<Group>> {
@@ -23,7 +23,6 @@ export class GroupService {
         page: filter.page,
         page_size: filter.size,
         search: filter.search,
-        company_id: filter.company,
       }) as any,
     });
   }

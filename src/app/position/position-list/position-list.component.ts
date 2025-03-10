@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { Observable } from 'rxjs';
+import { distinctUntilChanged, Observable, Subject, takeUntil } from 'rxjs';
 import { Nillable } from '../../model/nullable';
 import { Position } from '../../model/Position';
 import { AppState } from '../../core/stores/types';
@@ -16,6 +16,7 @@ import {
   setPage,
   setSize,
 } from '../../core/stores/position/position.actions';
+import { selectCompany } from '../../core/stores/common/common.selectors';
 
 @Component({
   selector: 'app-position-list',
@@ -25,6 +26,7 @@ import {
   styleUrl: './position-list.component.scss',
 })
 export class PositionListComponent {
+  private destroy$ = new Subject<void>();
   data$: Observable<Nillable<Position[]>>;
   page$: Observable<Nillable<number>>;
   size$: Observable<Nillable<number>>;
@@ -45,7 +47,14 @@ export class PositionListComponent {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(fetchPositionList());
+    this.store
+      .select(selectCompany)
+      .pipe(distinctUntilChanged(), takeUntil(this.destroy$))
+      .subscribe((company) => {
+        if (company) {
+          this.store.dispatch(fetchPositionList());
+        }
+      });
   }
 
   setPage(arg: number) {
@@ -76,5 +85,7 @@ export class PositionListComponent {
     if (this.resizeObserver) {
       this.resizeObserver.disconnect();
     }
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

@@ -1,6 +1,7 @@
+import { AccountState } from './account/account.state';
 import { AuthState } from './auth/auth.state';
 import { BranchState } from './branch/branch.state';
-import { CashboxState } from './cashbox/cashbox.state';
+import { TransactionState } from './transaction/transaction.state';
 import { ChildContractState } from './child-contract/child-contract.state';
 import { ChildState } from './child/child.state';
 import { CommonState } from './common/common.state';
@@ -15,6 +16,8 @@ import { PositionState } from './position/position.state';
 import { ReasonState } from './reason/reason.state';
 import { SalaryState } from './salary/salary.state';
 import { SickLeaveState } from './sick-leave/sick-leave.state';
+import { SubscriptionState } from './subscription/subscription.state';
+import { AccountStateState } from './account-state/account-state.state';
 
 export interface AppState {
   common: CommonState;
@@ -31,7 +34,10 @@ export interface AppState {
   employeeContract: EmployeeContractState;
   groupRegistration: GroupRegistrationState;
   childContract: ChildContractState;
-  cashbox: CashboxState;
+  transaction: TransactionState;
   sickLeave: SickLeaveState;
   salary: SalaryState;
+  account: AccountState;
+  subscription: SubscriptionState;
+  accountState: AccountStateState;
 }

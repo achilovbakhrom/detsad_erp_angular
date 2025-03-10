@@ -15,9 +15,14 @@ import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
 import { SharedModule } from '../shared/shared.module';
 import { SickLeaveRouting } from './sick-leave-routing.module';
+import { SickLeaveComponent } from './sick-leave.component';
 
 @NgModule({
-  declarations: [SickLeaveFormComponent, SickLeaveListComponent],
+  declarations: [
+    SickLeaveComponent,
+    SickLeaveFormComponent,
+    SickLeaveListComponent,
+  ],
   imports: [
     CommonModule,
     SickLeaveRouting,

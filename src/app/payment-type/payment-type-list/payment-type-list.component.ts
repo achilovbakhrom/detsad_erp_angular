@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { Observable } from 'rxjs';
+import { distinctUntilChanged, Observable, Subject, takeUntil } from 'rxjs';
 import { Nillable } from '../../model/nullable';
 import { PaymentType } from '../../model/PaymentType';
 import { Store } from '@ngrx/store';
@@ -16,6 +16,7 @@ import {
   setPage,
   setSize,
 } from '../../core/stores/payment-type/payment-type.actions';
+import { selectCompany } from '../../core/stores/common/common.selectors';
 
 @Component({
   selector: 'app-payment-type-list',
@@ -25,6 +26,7 @@ import {
   styleUrl: './payment-type-list.component.scss',
 })
 export class PaymentTypeListComponent {
+  private destroy$ = new Subject<void>();
   data$: Observable<Nillable<PaymentType[]>>;
   page$: Observable<Nillable<number>>;
   size$: Observable<Nillable<number>>;
@@ -45,7 +47,14 @@ export class PaymentTypeListComponent {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(fetchPaymentTypeList());
+    this.store
+      .select(selectCompany)
+      .pipe(distinctUntilChanged(), takeUntil(this.destroy$))
+      .subscribe((company) => {
+        if (company) {
+          this.store.dispatch(fetchPaymentTypeList());
+        }
+      });
   }
 
   setPage(arg: number) {
@@ -76,5 +85,7 @@ export class PaymentTypeListComponent {
     if (this.resizeObserver) {
       this.resizeObserver.disconnect();
     }
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

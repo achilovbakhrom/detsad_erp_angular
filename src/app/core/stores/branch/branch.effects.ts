@@ -3,6 +3,8 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import {
   catchError,
+  debounceTime,
+  filter,
   map,
   mergeMap,
   switchMap,
@@ -52,7 +54,6 @@ export class BranchEffects {
               this.goToBranchListPage();
               return saveBranchSuccess({ branch });
             }),
-
             catchError((error) =>
               of(saveBranchFailure({ error })).pipe(
                 tap(() => this.showErrorMessage(error))
@@ -71,18 +72,16 @@ export class BranchEffects {
         this.store.select(selectSize),
         this.store.select(selectCompany)
       ),
-
-      switchMap(([_, page, size, company]) =>
-        this.branchService
-          .fetchBranchList({ page, size, company: company?.id })
-          .pipe(
-            map((response) => fetchBranchListSuccess(response)),
-            catchError((error) =>
-              of(fetchBranchListError({ error })).pipe(
-                tap(() => this.showErrorMessage(error))
-              )
+      filter((arg) => arg[3] != null),
+      switchMap(([_, page, size]) =>
+        this.branchService.fetchBranchList({ page, size }).pipe(
+          map((response) => fetchBranchListSuccess(response)),
+          catchError((error) =>
+            of(fetchBranchListError({ error })).pipe(
+              tap(() => this.showErrorMessage(error))
             )
           )
+        )
       )
     )
   );

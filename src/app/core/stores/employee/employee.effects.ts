@@ -72,17 +72,15 @@ export class EmployeeEffects {
         this.store.select(selectCompany)
       ),
 
-      switchMap(([_, page, size, company]) =>
-        this.employeeService
-          .fetchEmployeeList({ page, size, company: company?.id })
-          .pipe(
-            map((response) => fetchEmployeeListSuccess(response)),
-            catchError((error) =>
-              of(fetchEmployeeListError({ error })).pipe(
-                tap(() => this.showErrorMessage(error))
-              )
+      switchMap(([_, page, size]) =>
+        this.employeeService.fetchEmployeeList({ page, size }).pipe(
+          map((response) => fetchEmployeeListSuccess(response)),
+          catchError((error) =>
+            of(fetchEmployeeListError({ error })).pipe(
+              tap(() => this.showErrorMessage(error))
             )
           )
+        )
       )
     )
   );

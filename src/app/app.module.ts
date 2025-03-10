@@ -14,7 +14,7 @@ import { tokenInterceptor } from './core/interceptors/auth.interceptor';
 import { loggingInterceptor } from './core/interceptors/logging.interceptor';
 import { appInterceptor } from './core/interceptors/app.interceptor';
 import { StoreModule } from '@ngrx/store';
-import { localStorageSyncReducer } from './core/stores/auth/auth.meta-reducer';
+import { localStorageSyncReducer } from './core/stores/common/common.meta-reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { authReducer } from './core/stores/auth/auth.reducer';
 import { companyReducer } from './core/stores/company/company.reducer';
@@ -52,34 +52,35 @@ import { getInitialEmployeeContractState } from './core/stores/employee-contract
 import { employeeReducer } from './core/stores/employee/employee.reducer';
 import { getInitialEmployeeState } from './core/stores/employee/employee.state';
 import { EmployeeEffects } from './core/stores/employee/employee.effects';
-import { GroupRegistrationComponent } from './group-registration/group-registration.component';
-import { ChildContractComponent } from './child-contract/child-contract.component';
 import { groupRegistrationReducer } from './core/stores/group-registration/group-registration.reducer';
 import { getInitialGroupRegistrationState } from './core/stores/group-registration/group-registration.state';
 import { GroupRegistrationEffects } from './core/stores/group-registration/group-registration.effects';
 import { childContractReducer } from './core/stores/child-contract/child-contract.reducer';
 import { getInitialChildContractState } from './core/stores/child-contract/child-contract.state';
 import { ChildContractEffects } from './core/stores/child-contract/child-contract.effects';
-import { SickLeaveComponent } from './sick-leave/sick-leave.component';
 import { SickLeaveReducer } from './core/stores/sick-leave/sick-leave.reducer';
 import { salaryReducer } from './core/stores/salary/salary.reducer';
-import { cashboxReducer } from './core/stores/cashbox/cashbox.reducer';
+import { transactionReducer } from './core/stores/transaction/transaction.reducer';
 import { getInitialSickLeaveState } from './core/stores/sick-leave/sick-leave.state';
 import { getInitialSalaryState } from './core/stores/salary/salary.state';
-import { getInitialCashboxState } from './core/stores/cashbox/cashbox.state';
+import { getInitialTransactionState } from './core/stores/transaction/transaction.state';
 import { SalaryEffects } from './core/stores/salary/salary.effects';
 import { SickLeaveEffects } from './core/stores/sick-leave/sick-leave.effects';
-import { CashboxEffects } from './core/stores/cashbox/cashbox.effects';
+import { TransactionEffects } from './core/stores/transaction/transaction.effects';
+import { accountReducer } from './core/stores/account/account.reducer';
+import { getInitialAccountState } from './core/stores/account/account.state';
+import { AccountEffects } from './core/stores/account/account.effects';
+import { subscriptionReducer } from './core/stores/subscription/subscription.reducer';
+import { getInitialSubscriptonState } from './core/stores/subscription/subscription.state';
+import { SubscriptionEffects } from './core/stores/subscription/subscription.effects';
+import { accountStateReducer } from './core/stores/account-state/account-state.reducer';
+import { getInitialAccountStateState } from './core/stores/account-state/account-state.state';
+import { AccountStateEffects } from './core/stores/account-state/account-state.effects';
 
 registerLocaleData(en);
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    GroupRegistrationComponent,
-    ChildContractComponent,
-    SickLeaveComponent,
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -102,7 +103,10 @@ registerLocaleData(en);
         childContract: childContractReducer,
         sickLeave: SickLeaveReducer,
         salary: salaryReducer,
-        cashbox: cashboxReducer,
+        transaction: transactionReducer,
+        account: accountReducer,
+        subscription: subscriptionReducer,
+        accountState: accountStateReducer,
       },
       {
         metaReducers: [localStorageSyncReducer],
@@ -123,7 +127,10 @@ registerLocaleData(en);
           childContract: getInitialChildContractState(),
           sickLeave: getInitialSickLeaveState(),
           salary: getInitialSalaryState(),
-          cashbox: getInitialCashboxState(),
+          transaction: getInitialTransactionState(),
+          account: getInitialAccountState(),
+          subscription: getInitialSubscriptonState(),
+          accountState: getInitialAccountStateState(),
         },
       }
     ),
@@ -143,7 +150,10 @@ registerLocaleData(en);
       ChildContractEffects,
       SalaryEffects,
       SickLeaveEffects,
-      CashboxEffects,
+      TransactionEffects,
+      AccountEffects,
+      SubscriptionEffects,
+      AccountStateEffects,
     ]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
   ],

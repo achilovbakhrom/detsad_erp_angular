@@ -6,7 +6,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { Observable } from 'rxjs';
+import { distinctUntilChanged, Observable, Subject, takeUntil } from 'rxjs';
 import { Nillable } from '../../model/nullable';
 import { Child } from '../../model/Child';
 import { AppState } from '../../core/stores/types';
@@ -23,6 +23,8 @@ import {
   setPage,
   setSize,
 } from '../../core/stores/child/child.actions';
+import { selectCompany } from '../../core/stores/common/common.selectors';
+import { fetchBranchList } from '../../core/stores/branch/branch.actions';
 
 @Component({
   selector: 'app-child-list',
@@ -32,6 +34,7 @@ import {
   styleUrl: './child-list.component.scss',
 })
 export class ChildListComponent implements AfterViewInit, OnDestroy, OnInit {
+  private destroy$ = new Subject<void>();
   data$: Observable<Nillable<Child[]>>;
   page$: Observable<Nillable<number>>;
   size$: Observable<Nillable<number>>;
@@ -52,7 +55,14 @@ export class ChildListComponent implements AfterViewInit, OnDestroy, OnInit {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(fetchChildList());
+    this.store
+      .select(selectCompany)
+      .pipe(distinctUntilChanged(), takeUntil(this.destroy$))
+      .subscribe((company) => {
+        if (company) {
+          this.store.dispatch(fetchChildList());
+        }
+      });
   }
 
   setPage(arg: number) {
@@ -83,5 +93,7 @@ export class ChildListComponent implements AfterViewInit, OnDestroy, OnInit {
     if (this.resizeObserver) {
       this.resizeObserver.disconnect();
     }
+    this.destroy$.next()
+    this.destroy$.complete();
   }
 }

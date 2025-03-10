@@ -3,6 +3,8 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import {
   catchError,
+  debounceTime,
+  filter,
   map,
   mergeMap,
   switchMap,
@@ -28,6 +30,7 @@ import { AppState } from '../types';
 import { selectPage, selectSize } from './group.selectors';
 import { selectCompany } from '../common/common.selectors';
 import { GroupService } from '../../../group/group.service';
+import { setCompany } from '../common/common.actions';
 
 @Injectable()
 export class GroupEffects {
@@ -71,18 +74,16 @@ export class GroupEffects {
         this.store.select(selectSize),
         this.store.select(selectCompany)
       ),
-
-      switchMap(([_, page, size, company]) =>
-        this.groupService
-          .fetchGroupList({ page, size, company: company?.id })
-          .pipe(
-            map((response) => fetchGroupListSuccess(response)),
-            catchError((error) =>
-              of(fetchGroupListError({ error })).pipe(
-                tap(() => this.showErrorMessage(error))
-              )
+      filter(([_, __, ___, company]) => company != null),
+      switchMap(([_, page, size]) =>
+        this.groupService.fetchGroupList({ page, size }).pipe(
+          map((response) => fetchGroupListSuccess(response)),
+          catchError((error) =>
+            of(fetchGroupListError({ error })).pipe(
+              tap(() => this.showErrorMessage(error))
             )
           )
+        )
       )
     )
   );
@@ -90,6 +91,7 @@ export class GroupEffects {
   triggerLoadList$ = createEffect(() =>
     this.actions$.pipe(
       ofType(setPage, setSize),
+      debounceTime(300),
       map(() => fetchGroupList())
     )
   );

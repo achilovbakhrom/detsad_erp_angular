@@ -3,6 +3,8 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import {
   catchError,
+  debounceTime,
+  filter,
   map,
   mergeMap,
   switchMap,
@@ -52,7 +54,6 @@ export class ChildEffects {
               this.goToChildListPage();
               return saveChildSuccess({ child });
             }),
-
             catchError((error) =>
               of(saveChildFailure({ error })).pipe(
                 tap(() => this.showErrorMessage(error))
@@ -71,18 +72,17 @@ export class ChildEffects {
         this.store.select(selectSize),
         this.store.select(selectCompany)
       ),
+      filter(([_, __, ___, company]) => company != null),
 
-      switchMap(([_, page, size, company]) =>
-        this.childService
-          .fetchChildList({ page, size, company: company?.id })
-          .pipe(
-            map((response) => fetchChildListSuccess(response)),
-            catchError((error) =>
-              of(fetchChildListError({ error })).pipe(
-                tap(() => this.showErrorMessage(error))
-              )
+      switchMap(([_, page, size]) =>
+        this.childService.fetchChildList({ page, size }).pipe(
+          map((response) => fetchChildListSuccess(response)),
+          catchError((error) =>
+            of(fetchChildListError({ error })).pipe(
+              tap(() => this.showErrorMessage(error))
             )
           )
+        )
       )
     )
   );
@@ -90,6 +90,7 @@ export class ChildEffects {
   triggerLoadList$ = createEffect(() =>
     this.actions$.pipe(
       ofType(setPage, setSize),
+      debounceTime(300),
       map(() => fetchChildList())
     )
   );

@@ -1,0 +1,53 @@
+<div #containerEl class="content">
+    <div nz-flex class="header" nzJustify="flex-end" nzAlign="center">
+        <button nz-button nzType="primary" [routerLink]="'/app/transaction/create'">Добавить</button>
+    </div>
+    <nz-table
+        #table
+        *ngIf="(data$ | async) as data"
+        [nzData]="data || []"
+        [nzPageIndex]="(size$ | async) ?? 1"
+        (nzPageIndexChange)="setPage($event)"
+        [nzPageSize]="(size$ | async) ?? 20"
+        (nzPageSizeChange)="setSize($event)"        
+        [nzScroll]="{ y: tableHeight }"
+    >
+        <thead>
+          <tr>
+            <th>Дата</th>
+            <th>Тип операции</th>
+            <th>Способ оплаты</th>
+            <th>Счет</th>
+            <th>Сумма</th>
+            <th>Причина</th>
+            <th>Описание</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of data">
+            <td>{{ row.date }}</td>
+            <td>{{ row.transaction_type}}</td>
+            <td>{{ row.account.name}}</td>
+            <td>{{ row.payment_type.name }}</td>
+            <td>{{ row.amount }}</td>
+            <td>{{ row.reason?.title ?? '-' }}</td>
+            
+      
+            <td>{{ row.description }}</td>
+            <td>
+              <button
+                nz-button
+                nzType="text"
+                nz-popconfirm
+                nzPopconfirmTitle="Вы действительно хотите удалить?"
+                (nzOnConfirm)="onDelete(row)"
+                [nzOkText]="'Да'"
+                [nzCancelText]="'Нет'"
+              >Удалить</button>
+              
+            </td>
+          </tr>
+        </tbody>
+    </nz-table>
+</div>

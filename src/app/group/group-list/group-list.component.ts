@@ -5,7 +5,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { Observable } from 'rxjs';
+import { distinctUntilChanged, Observable, Subject, takeUntil } from 'rxjs';
 import { Nillable } from '../../model/nullable';
 import { Group } from '../../model/Group';
 import { Store } from '@ngrx/store';
@@ -22,6 +22,7 @@ import {
   setPage,
   setSize,
 } from '../../core/stores/group/group.actions';
+import { selectCompany } from '../../core/stores/common/common.selectors';
 
 @Component({
   selector: 'app-group-list',
@@ -30,7 +31,8 @@ import {
   templateUrl: './group-list.component.html',
   styleUrl: './group-list.component.scss',
 })
-export class GroupListComponent implements OnDestroy, OnInit {
+export class GroupListComponent implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
   data$: Observable<Nillable<Group[]>>;
   page$: Observable<Nillable<number>>;
   size$: Observable<Nillable<number>>;
@@ -51,7 +53,14 @@ export class GroupListComponent implements OnDestroy, OnInit {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(fetchGroupList());
+    this.store
+      .select(selectCompany)
+      .pipe(distinctUntilChanged(), takeUntil(this.destroy$))
+      .subscribe((company) => {
+        if (company) {
+          this.store.dispatch(fetchGroupList());
+        }
+      });
   }
 
   setPage(arg: number) {
@@ -82,5 +91,7 @@ export class GroupListComponent implements OnDestroy, OnInit {
     if (this.resizeObserver) {
       this.resizeObserver.disconnect();
     }
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

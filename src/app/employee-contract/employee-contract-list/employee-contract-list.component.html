@@ -37,7 +37,7 @@
               
               <nz-flex nz-row>
                 <button
-                  *ngIf="row.status === 'created'"
+                  *ngIf="row.status === 'created' || row.status === 'finished'"
                   nz-button
                   nzType="text"
                   nz-popconfirm

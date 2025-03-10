@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { Observable } from 'rxjs';
+import { distinctUntilChanged, Observable, Subject, takeUntil } from 'rxjs';
 import { Nillable } from '../../model/nullable';
 import { Department } from '../../model/Department';
 import { Store } from '@ngrx/store';
@@ -16,6 +16,7 @@ import {
   setPage,
   setSize,
 } from '../../core/stores/department/department.actions';
+import { selectCompany } from '../../core/stores/common/common.selectors';
 
 @Component({
   selector: 'app-department-list',
@@ -25,6 +26,7 @@ import {
   styleUrl: './department-list.component.scss',
 })
 export class DepartmentListComponent {
+  private destroy$ = new Subject<void>();
   data$: Observable<Nillable<Department[]>>;
   page$: Observable<Nillable<number>>;
   size$: Observable<Nillable<number>>;
@@ -45,7 +47,14 @@ export class DepartmentListComponent {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(fetchDepartmentList());
+    this.store
+      .select(selectCompany)
+      .pipe(distinctUntilChanged(), takeUntil(this.destroy$))
+      .subscribe((company) => {
+        if (company) {
+          this.store.dispatch(fetchDepartmentList());
+        }
+      });
   }
 
   setPage(arg: number) {
@@ -76,5 +85,8 @@ export class DepartmentListComponent {
     if (this.resizeObserver) {
       this.resizeObserver.disconnect();
     }
+
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

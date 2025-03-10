@@ -92,7 +92,6 @@ export class PositionPickerComponent
             page: 1,
             size: 50,
             search: value,
-            company: company?.id,
           });
         }),
         map((response) => response.results)

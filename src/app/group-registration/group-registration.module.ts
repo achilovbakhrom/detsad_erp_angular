@@ -18,9 +18,11 @@ import { NzListModule } from 'ng-zorro-antd/list';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { SharedModule } from '../shared/shared.module';
 import { GroupRegistrationFormComponentAddChildModal } from './group-registration-form/group-registration-form-add-child-modal.component';
+import { GroupRegistrationComponent } from './group-registration.component';
 
 @NgModule({
   declarations: [
+    GroupRegistrationComponent,
     GroupRegistrationFormComponent,
     GroupRegistrationListComponent,
     GroupRegistrationFormComponentAddChildModal,

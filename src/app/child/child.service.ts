@@ -14,7 +14,7 @@ export class ChildService {
   constructor(private httpClient: HttpClient) {}
 
   createChild(child: TransformCompanyToBeSaved<Child>): Observable<Child> {
-    return this.httpClient.post<Child>('child/', child);
+    return this.httpClient.post<Child>('child/create/', child);
   }
 
   fetchChildList(filter: BaseListFilter): Observable<BaseListResponse<Child>> {
@@ -23,7 +23,6 @@ export class ChildService {
         page: filter.page,
         page_size: filter.size,
         search: filter.search,
-        company_id: filter.company,
       }) as any,
     });
   }

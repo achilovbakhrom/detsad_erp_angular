@@ -33,6 +33,9 @@ export class SalaryFormComponent {
     this.salaryForm = this.fb.group({
       date: ['', [Validators.required]],
       employee: [null, [Validators.required]],
+      payment_type: [null, [Validators.required]],
+      account: [null, [Validators.required]],
+      amount: [0, [Validators.required]],
       description: ['', [Validators.required]],
     });
   }
@@ -89,6 +92,9 @@ export class SalaryFormComponent {
           salary: {
             date: salaryData.date,
             employee: salaryData.employee.id,
+            payment_type: salaryData.payment_type.id,
+            account: salaryData.account.id,
+            amount: salaryData.amount,
             description: salaryData.description,
           },
         })

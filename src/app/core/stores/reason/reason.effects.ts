@@ -68,21 +68,18 @@ export class ReasonEffects {
       ofType(fetchReasonList),
       withLatestFrom(
         this.store.select(selectPage),
-        this.store.select(selectSize),
-        this.store.select(selectCompany)
+        this.store.select(selectSize)
       ),
 
-      switchMap(([_, page, size, company]) =>
-        this.reasonService
-          .fetchReasonList({ page, size, company: company?.id })
-          .pipe(
-            map((response) => fetchReasonListSuccess(response)),
-            catchError((error) =>
-              of(fetchReasonListError({ error })).pipe(
-                tap(() => this.showErrorMessage(error))
-              )
+      switchMap(([_, page, size]) =>
+        this.reasonService.fetchReasonList({ page, size }).pipe(
+          map((response) => fetchReasonListSuccess(response)),
+          catchError((error) =>
+            of(fetchReasonListError({ error })).pipe(
+              tap(() => this.showErrorMessage(error))
             )
           )
+        )
       )
     )
   );

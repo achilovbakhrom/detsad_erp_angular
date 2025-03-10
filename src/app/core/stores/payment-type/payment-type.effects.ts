@@ -68,21 +68,18 @@ export class PaymentTypeEffects {
       ofType(fetchPaymentTypeList),
       withLatestFrom(
         this.store.select(selectPage),
-        this.store.select(selectSize),
-        this.store.select(selectCompany)
+        this.store.select(selectSize)
       ),
 
-      switchMap(([_, page, size, company]) =>
-        this.paymentTypeService
-          .fetchPaymentTypeList({ page, size, company: company?.id })
-          .pipe(
-            map((response) => fetchPaymentTypeListSuccess(response)),
-            catchError((error) =>
-              of(fetchPaymentTypeListError({ error })).pipe(
-                tap(() => this.showErrorMessage(error))
-              )
+      switchMap(([_, page, size]) =>
+        this.paymentTypeService.fetchPaymentTypeList({ page, size }).pipe(
+          map((response) => fetchPaymentTypeListSuccess(response)),
+          catchError((error) =>
+            of(fetchPaymentTypeListError({ error })).pipe(
+              tap(() => this.showErrorMessage(error))
             )
           )
+        )
       )
     )
   );

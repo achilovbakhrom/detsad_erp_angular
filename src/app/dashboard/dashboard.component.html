@@ -9,7 +9,7 @@
     </nz-page-header>
     <nz-flex nzGap="0" class="app-content">
       <ul nz-menu nzMode="inline" class="app-side-bar">
-        <li nz-menu-item nzSelected>
+        <li nz-menu-item [nzSelected]="isActive('/app/main')">
           <a routerLink="/app/main">
             Главная
           </a>
@@ -21,84 +21,130 @@
           nzOpen
         >
           <ul>
-            <li nz-menu-item>
+            <li nz-menu-item [nzSelected]="isActive('/app/company')">
               <a routerLink="/app/company">
                 Компании
               </a>
             </li>
-            <li nz-menu-item>
+            <li nz-menu-item [nzSelected]="isActive('/app/branch')">
               <a routerLink="/app/branch">
                 Филиалы
               </a>
             </li>
-            <li nz-menu-item>
+            <li nz-menu-item [nzSelected]="isActive('/app/group')">
               <a routerLink="/app/group">
                 Группы
               </a>
             </li>
-            <li nz-menu-item>
+            <li nz-menu-item [nzSelected]="isActive('/app/child')">
               <a routerLink="/app/child">
                 Дети
               </a>
             </li>
-            <li nz-menu-item>
+            <li nz-menu-item [nzSelected]="isActive('/app/employee')">
               <a routerLink="/app/employee">
                 Сотрудники
               </a>
             </li>
-            <li nz-menu-item>
+            <li nz-menu-item [nzSelected]="isActive('/app/position')">
               <a routerLink="/app/position">
                 Позиции
               </a>
             </li>
-            <li nz-menu-item>
+            <li nz-menu-item [nzSelected]="isActive('/app/reason')">
               <a routerLink="/app/reason">
                 Причины
               </a>
             </li>
-            <li nz-menu-item>
+            <li nz-menu-item [nzSelected]="isActive('/app/department')">
               <a routerLink="/app/department">
                 Разделы
               </a>
             </li>
-            <li nz-menu-item>
+            <li nz-menu-item [nzSelected]="isActive('/app/payment-type')">
               <a routerLink="/app/payment-type">
                 Способ оплаты
+              </a>
+            </li>
+            <li nz-menu-item [nzSelected]="isActive('/app/account')">
+              <a routerLink="/app/account">
+                Счета
               </a>
             </li>
             
           </ul>
         </li>
-        <li nz-menu-item nzIcon="user">
-          <a routerLink="/app/employee-contract">
-            Сотрудники (Контракт)
-          </a>
-        </li>    
-        <li nz-menu-item>
-          <a routerLink="/app/group-registration">
-            Группы (Регистрация)
-          </a>
+        <li
+          nz-submenu
+          nzTitle="Управление"
+          nzIcon="notification"
+          nzOpen
+        >
+          <ul>
+            <li nz-menu-item nzIcon="user" [nzSelected]="isActive('/app/employee-contract')">
+              <a routerLink="/app/employee-contract">
+                Сотрудники (Контракт)
+              </a>
+            </li>    
+            <li nz-menu-item [nzSelected]="isActive('/app/group-registration')">
+              <a routerLink="/app/group-registration">
+                Группы (Регистрация)
+              </a>
+            </li>
+            <li nz-menu-item [nzSelected]="isActive('/app/child-contract')">
+              <a routerLink="/app/child-contract">
+                Клиенты (Контракт)
+              </a>
+            </li>
+            <li nz-menu-item [nzSelected]="isActive('/app/sick-leave')">
+              <a routerLink="/app/sick-leave">
+                Посещение
+              </a>
+            </li>
+          </ul>
         </li>
-        <li nz-menu-item>
-          <a routerLink="/app/child-contract">
-            Клиенты (Контракт)
-          </a>
+
+        <li
+          nz-submenu
+          nzTitle="Финансы"
+          nzIcon="pie-chart"
+          nzOpen
+        >
+          <ul>
+            <li nz-menu-item [nzSelected]="isActive('/app/subscription')">
+              <a routerLink="/app/subscription">
+                Платежи
+              </a>
+            </li>
+            <li nz-menu-item [nzSelected]="isActive('/app/salary')">
+              <a routerLink="/app/salary">
+                Зарплата
+              </a>
+            </li>
+            
+            <li nz-menu-item [nzSelected]="isActive('/app/transaction')">
+              <a routerLink="/app/transaction">
+                Касса
+              </a>
+            </li>
+          </ul>
         </li>
-        <li nz-menu-item>
-          <a routerLink="/app/salary">
-            Зарплата
-          </a>
+        <li
+          nz-submenu
+          nzTitle="Отчеты"
+          nzIcon="bar-chart"
+          nzOpen
+        >
+          <ul>
+            <li nz-menu-item [nzSelected]="isActive('/app/report/account-state')">
+              <a routerLink="/app/report/account-state">
+                Мои счета
+              </a>
+            </li>
+          </ul>
         </li>
-        <li nz-menu-item>
-          <a routerLink="/app/sick-leave">
-            Посещение
-          </a>
-        </li>
-        <li nz-menu-item>
-          <a routerLink="/app/cashbox">
-            Касса
-          </a>
-        </li>
+        
+        
       </ul>
       <nz-flex nzFlex="1 1 0" nzVertical class="app-content__inner">
           <router-outlet></router-outlet>

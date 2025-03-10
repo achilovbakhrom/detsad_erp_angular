@@ -102,9 +102,28 @@ const routes: Routes = [
           ),
       },
       {
-        path: 'cashbox',
+        path: 'transaction',
         loadChildren: () =>
-          import('../cashbox/cashbox.module').then((m) => m.CashboxModule),
+          import('../transaction/transaction.module').then(
+            (m) => m.TransactionModule
+          ),
+      },
+      {
+        path: 'account',
+        loadChildren: () =>
+          import('../account/account.module').then((m) => m.AccountModule),
+      },
+      {
+        path: 'subscription',
+        loadChildren: () =>
+          import('../subscription/subscription.module').then(
+            (m) => m.SubscriptionModule
+          ),
+      },
+      {
+        path: 'report',
+        loadChildren: () =>
+          import('../report/report.module').then((m) => m.ReportModule),
       },
     ],
   },

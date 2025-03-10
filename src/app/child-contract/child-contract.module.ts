@@ -15,9 +15,14 @@ import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
 import { SharedModule } from '../shared/shared.module';
+import { ChildContractComponent } from './child-contract.component';
 
 @NgModule({
-  declarations: [ChildContractFormComponent, ChildContractListComponent],
+  declarations: [
+    ChildContractComponent,
+    ChildContractFormComponent,
+    ChildContractListComponent,
+  ],
   imports: [
     CommonModule,
     ChildContractRoutingModule,

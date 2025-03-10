@@ -68,21 +68,18 @@ export class PositionEffects {
       ofType(fetchPositionList),
       withLatestFrom(
         this.store.select(selectPage),
-        this.store.select(selectSize),
-        this.store.select(selectCompany)
+        this.store.select(selectSize)
       ),
 
-      switchMap(([_, page, size, company]) =>
-        this.positionService
-          .fetchPositionList({ page, size, company: company?.id })
-          .pipe(
-            map((response) => fetchPositionListSuccess(response)),
-            catchError((error) =>
-              of(fetchPositionListError({ error })).pipe(
-                tap(() => this.showErrorMessage(error))
-              )
+      switchMap(([_, page, size]) =>
+        this.positionService.fetchPositionList({ page, size }).pipe(
+          map((response) => fetchPositionListSuccess(response)),
+          catchError((error) =>
+            of(fetchPositionListError({ error })).pipe(
+              tap(() => this.showErrorMessage(error))
             )
           )
+        )
       )
     )
   );

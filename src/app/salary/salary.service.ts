@@ -20,13 +20,12 @@ export class SalaryService {
         page: filter.page,
         page_size: filter.size,
         search: filter.search,
-        company_id: filter.company,
       }) as any,
     });
   }
 
   deleteSalaryById(id: number): Observable<void> {
-    return this.httpClient.delete<void>(`salary/${id}/delete/`);
+    return this.httpClient.delete<void>(`salary/${id}/`);
   }
 
   createSalary(salary: SalaryInput): Observable<Salary> {

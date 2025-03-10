@@ -1,0 +1,44 @@
+<div #containerEl class="content" *ngIf="(data$ | async) as state; else loading;">
+    <div class="header">
+        <nz-row nzGutter="16">
+
+            <nz-col *ngFor="let row of (state.balance || [])">
+                <nz-card>
+                    <nz-statistic [nzValue]="(row.balance| number)!" [nzTitle]="row.account?.name + ', ' + row.payment_type?.name "></nz-statistic>
+                </nz-card>
+            </nz-col>
+        </nz-row>
+    </div>
+    <div class="table">
+        <nz-table
+            #table
+            [nzData]="state.transactions || []"
+            [nzScroll]="{ y: tableHeight }"
+            [nzShowPagination]="false"
+        >
+            <thead>
+              <tr>
+                <th>Дата</th>
+                <th>Счет</th>
+                <th>Способ оплаты</th>
+                <th>Сумма</th>
+                <th>Тип Операции</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let row of state.transactions">
+                <td>{{ row.date }}</td>
+                <td>{{ row.account?.name ?? '-'}}</td>
+                <td>{{ row.payment_type?.name ?? '-'}}</td>
+                <td>{{ row.amount != null ? (row.amount | number) : '-' }}</td>
+                <td>{{ row.tx_type ?? '-' }}</td>
+              </tr>
+            </tbody>
+        </nz-table>
+    </div>
+</div>
+
+<ng-template #loading>
+    <div>Идет загрузка</div>
+</ng-template>
+

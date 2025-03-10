@@ -16,6 +16,7 @@ import { PaymentTypePickerComponent } from './components/payment-type-picker/pay
 import { ChildContractPickerComponent } from './components/child-contract-picker/child-contract-picker.component';
 import { EmployeeContractPickerComponent } from './components/employee-contract-picker/employee-contract-picker.component';
 import { ReasonPickerComponent } from './components/reason-picker/reason-picker.component';
+import { AccountPickerComponent } from './components/account-picker/account-picker.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { ReasonPickerComponent } from './components/reason-picker/reason-picker.
     ChildContractPickerComponent,
     EmployeeContractPickerComponent,
     ReasonPickerComponent,
+    AccountPickerComponent,
   ],
   imports: [
     CommonModule,
@@ -54,6 +56,7 @@ import { ReasonPickerComponent } from './components/reason-picker/reason-picker.
     ChildContractPickerComponent,
     EmployeeContractPickerComponent,
     ReasonPickerComponent,
+    AccountPickerComponent,
   ],
 })
 export class SharedModule {}

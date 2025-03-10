@@ -28,13 +28,12 @@ export class EmployeeContractService {
     filter: BaseListFilter
   ): Observable<BaseListResponse<EmployeeContract>> {
     return this.httpClient.get<BaseListResponse<EmployeeContract>>(
-      'employee-contracts/list/',
+      'employee-contracts/',
       {
         params: removeNullAndUndefined({
           page: filter.page,
           page_size: filter.size,
           search: filter.search,
-          company_id: filter.company,
         }) as any,
       }
     );

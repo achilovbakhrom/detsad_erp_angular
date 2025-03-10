@@ -6,7 +6,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { Observable } from 'rxjs';
+import { distinctUntilChanged, Observable, Subject, takeUntil } from 'rxjs';
 import { Nillable } from '../../model/nullable';
 import { Employee } from '../../model/Employee';
 import { Store } from '@ngrx/store';
@@ -23,6 +23,7 @@ import {
   setPage,
   setSize,
 } from '../../core/stores/employee/employee.actions';
+import { selectCompany } from '../../core/stores/common/common.selectors';
 
 @Component({
   selector: 'app-employee-list',
@@ -32,6 +33,7 @@ import {
   styleUrl: './employee-list.component.scss',
 })
 export class EmployeeListComponent implements AfterViewInit, OnDestroy, OnInit {
+  private destroy$ = new Subject<void>();
   data$: Observable<Nillable<Employee[]>>;
   page$: Observable<Nillable<number>>;
   size$: Observable<Nillable<number>>;
@@ -52,7 +54,14 @@ export class EmployeeListComponent implements AfterViewInit, OnDestroy, OnInit {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(fetchEmployeeList());
+    this.store
+      .select(selectCompany)
+      .pipe(distinctUntilChanged(), takeUntil(this.destroy$))
+      .subscribe((company) => {
+        if (company) {
+          this.store.dispatch(fetchEmployeeList());
+        }
+      });
   }
 
   setPage(arg: number) {
@@ -83,5 +92,7 @@ export class EmployeeListComponent implements AfterViewInit, OnDestroy, OnInit {
     if (this.resizeObserver) {
       this.resizeObserver.disconnect();
     }
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
