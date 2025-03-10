@@ -38,7 +38,6 @@ export const tokenInterceptor: HttpInterceptorFn = (
     withLatestFrom(store.select(selectCompany)),
     exhaustMap(([authState, currentCompany]) => {
       let clonedRequest = req;
-      console.log('authState?.accessToken', authState?.accessToken);
       if (authState?.accessToken != null) {
         clonedRequest = req.clone({
           setHeaders: {

@@ -54,7 +54,6 @@ export class AccountStateComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     this.resizeObserver = new ResizeObserver(() => {
-      console.log('ttt', this.containerRef.nativeElement.offsetHeight);
       this.tableHeight = `${
         this.containerRef.nativeElement.offsetHeight - 190
       }px`;

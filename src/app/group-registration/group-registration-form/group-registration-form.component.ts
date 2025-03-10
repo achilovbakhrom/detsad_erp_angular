@@ -57,7 +57,6 @@ export class GroupRegistrationFormComponent implements OnInit, OnDestroy {
             group_registration_id: Number(this.id!),
           }),
       }).subscribe(({ groupRegistration, childContracts }) => {
-        console.log('ccc', childContracts);
         this.groupRegistrationForm.patchValue({
           date: groupRegistration.date,
           group: groupRegistration.group,
